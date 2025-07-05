@@ -1,0 +1,718 @@
+:root {
+    --bg-color: #FFFFFF;
+    --primary-text-color: #1a1a1a;
+    --secondary-text-color: #555555;
+    --card-bg-color: #FFFFFF;
+    --border-color: #eaeaea;
+    --accent-color: #5A4FCF;
+    --timeline-axis-color: #d1d5db;
+    --font-main: 'Figtree', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--primary-text-color);
+    font-family: var(--font-main);
+    line-height: 1.6;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+body.modal-open {
+    overflow: hidden;
+}
+
+/* --- Main Content Layout --- */
+.main-content, .content-wrapper {
+    width: 100%;
+    max-width: 900px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+.main-content-full-width {
+    width: 100%;
+    max-width: 1400px;
+    margin: 2rem auto;
+    padding: 0 2rem;
+    box-sizing: border-box;
+}
+
+
+/* --- Home Page Specific Styles --- */
+.main-content-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+}
+
+.typed-text {
+    font-family: var(--font-mono);
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    min-height: 1.2em;
+}
+
+.typing-cursor {
+    display: inline-block;
+    border-right: 4px solid var(--primary-text-color);
+    animation: blink-caret 0.75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: var(--primary-text-color); }
+}
+
+
+/* --- Generic Content Styles --- */
+.project-grid, .interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background-color: var(--card-bg-color);
+    border: 2px solid var(--primary-text-color);
+    border-radius: 4px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.card:hover {
+    transform: scale(1.02);
+    background-color: #f0f0f0;
+}
+
+.project-tile, .interest-card {
+    cursor: pointer;
+}
+
+.card h3, .card h4 {
+    margin-top: 0;
+    color: var(--primary-text-color);
+    font-family: var(--font-mono);
+}
+
+.card ul { padding-left: 20px; }
+.card p { color: var(--secondary-text-color); }
+.card-footer { margin-top: 1.5rem; }
+.card-link { color: var(--accent-color); text-decoration: none; font-weight: 700; font-family: var(--font-mono);}
+.back-to-menu { display: inline-block; margin-bottom: 2rem; }
+
+/* --- Navigation --- */
+.navbar {
+    display: flex; justify-content: center; align-items: center;
+    padding: 1rem 2rem; border-bottom: 1px solid var(--border-color);
+    box-sizing: border-box; width: 100%;
+}
+.nav-menu {
+    display: flex; list-style: none; gap: 2rem;
+    margin: 0; padding: 0; position: relative;
+}
+.nav-link {
+    color: var(--secondary-text-color); text-decoration: none;
+    font-weight: 500; padding: 6px 12px; border-radius: 6px;
+    position: relative; z-index: 2; transition: color 0.3s ease;
+}
+
+.nav-link:hover, .nav-link.active { 
+    color: var(--primary-text-color); 
+}
+
+.nav-link.active {
+    color: white;
+    font-weight: 700;
+}
+
+.nav-pill {
+    position: absolute; 
+    top: 0; 
+    left: 0; 
+    height: 100%;
+    background-color: var(--accent-color);
+    border-radius: 6px;
+    z-index: 1;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), width 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --- Animations & Transitions --- */
+.fade-in { animation: fadeInAnimation 0.8s ease-in-out forwards; opacity: 0; }
+@keyframes fadeInAnimation { to { opacity: 1; } }
+main { transition: opacity 0.3s ease-in-out; }
+main.is-leaving { opacity: 0; }
+.hidden { display: none; }
+
+/* =================================== */
+/* =========== PAGE STYLES =========== */
+/* =================================== */
+
+.interest-card.disabled {
+    cursor: not-allowed;
+    background-color: #f9f9f9;
+    color: #aaa;
+}
+
+.interest-card.disabled:hover {
+    transform: none;
+    background-color: #f9f9f9;
+}
+
+
+/* =========== ECCENTRIC BIO PAGE STYLES =========== */
+.bio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(150px, auto);
+    grid-auto-flow: dense;
+    gap: 1rem;
+    font-family: var(--font-mono);
+}
+
+.grid-item {
+    border: 2px solid var(--primary-text-color);
+    padding: 1.5rem;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+}
+
+.grid-item:hover {
+    background-color: #f0f0f0;
+    transform: scale(1.02);
+    z-index: 10;
+}
+
+.grid-item h1 {
+    font-family: var(--font-main);
+    font-size: 3rem;
+    margin: 0 0 1rem 0;
+}
+.grid-item h3 {
+    margin: 0 0 1rem 0;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--primary-text-color);
+    display: inline-block;
+    padding-bottom: 4px;
+}
+.grid-item p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+.grid-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+.grid-item.wide {
+    grid-column: span 2;
+}
+.grid-item.tall {
+    grid-row: span 2;
+}
+
+.grid-item.accent-bg {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+.grid-item.accent-bg h3 {
+    border-bottom-color: white;
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.skills-list li {
+    margin-bottom: 0.5rem;
+}
+.skills-list li span {
+    font-weight: 700;
+}
+
+.image-card {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+.card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-text-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+}
+
+
+/* --- Portfolio Modal Styles --- */
+.modal-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); backdrop-filter: blur(8px);
+    display: flex; justify-content: center; align-items: center; z-index: 1000;
+    opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+.modal-overlay.active { opacity: 1; visibility: visible; }
+.modal-content {
+    background-color: var(--bg-color); padding: 2rem; border-radius: 4px;
+    width: 100%; max-width: 1100px; max-height: 100%;
+    overflow-y: auto;
+    position: relative; transform: scale(0.9); transition: transform 0.3s ease;
+    border: 2px solid var(--primary-text-color);
+}
+.modal-overlay.active .modal-content { transform: scale(1); }
+.modal-body {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 2rem;
+    align-items: start;
+}
+.modal-video-container { width: 100%; background-color: #1a1a1a; border-radius: 4px; }
+#modal-video { width: 100%; height: auto; display: block; border-radius: 4px; }
+.modal-details h3 { margin-top: 0; font-size: 1.75rem; margin-bottom: 1rem; font-family: var(--font-mono); }
+.modal-details p { margin-bottom: 1.5rem; }
+.modal-close-btn {
+    position: absolute; top: 1rem; right: 1.5rem; font-size: 2.5rem;
+    color: #9ca3af; background: none; border: none;
+    cursor: pointer; line-height: 1; padding: 0.25rem;
+}
+.modal-nav {
+    position: fixed; top: 50%; transform: translateY(-50%);
+    background-color: rgba(26, 26, 26, 0.4); color: white;
+    border: none; cursor: pointer; padding: 0.75rem; font-size: 1.5rem;
+    border-radius: 50%; width: 48px; height: 48px; display: flex;
+    align-items: center; justify-content: center; transition: background-color 0.2s ease;
+}
+.modal-nav:hover { background-color: rgba(26, 26, 26, 0.7); }
+.modal-nav-prev { left: 2rem; }
+.modal-nav-next { right: 2rem; }
+
+
+/* =========== PORTFOLIO PAGE STYLES =========== */
+.portfolio-page-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 3rem;
+    max-width: 1200px;
+}
+
+.portfolio-sidebar {
+    border-right: 1px solid var(--border-color);
+    padding-right: 2rem;
+}
+
+.portfolio-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: sticky;
+    top: 4rem;
+}
+
+.portfolio-nav-link {
+    display: block;
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    text-decoration: none;
+    color: var(--secondary-text-color);
+    font-weight: 500;
+    border-radius: 8px;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.portfolio-nav-link:hover {
+    background-color: #f0f0f0;
+    color: var(--primary-text-color);
+}
+
+.portfolio-nav-link.active {
+    background-color: var(--accent-color);
+    color: white;
+    font-weight: 700;
+}
+
+.portfolio-section.hidden {
+    display: none;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    margin-top: 0;
+}
+
+
+/* =========== RESUME PAGE STYLES =========== */
+@keyframes scroll-timeline {
+    from { transform: translateX(0); }
+    to { transform: translateX(calc(-50%)); }
+}
+
+.timeline-container {
+    width: 100%;
+    margin: 2rem auto 0;
+    overflow-x: hidden;
+    padding-top: 80px; 
+    position: relative;
+}
+
+.timeline-title-top-center {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 1;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--primary-text-color);
+}
+
+.timeline-wrapper {
+    position: relative;
+    height: 450px; 
+    padding: 0;
+    box-sizing: content-box;
+    display: flex;
+    align-items: center;
+    width: calc(320px * 12);
+    animation: scroll-timeline 60s linear infinite;
+}
+
+.timeline-line {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--border-color);
+    transform: translateY(-50%);
+}
+
+.timeline-item {
+    position: relative;
+    height: 100%;
+    width: 280px;
+    flex-shrink: 0;
+    margin: 0 20px;
+}
+
+.timeline-dot {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    background: var(--accent-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    box-shadow: 0 0 0 4px var(--bg-color), 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.timeline-connector {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2px;
+    background: var(--border-color);
+    height: 50px;
+}
+
+.timeline-item.top .timeline-connector {
+    bottom: 50%;
+    margin-bottom: 8px;
+}
+
+.timeline-item.bottom .timeline-connector {
+    top: 50%;
+    margin-top: 8px;
+}
+
+.timeline-card {
+    background: var(--card-bg-color);
+    border: 2px solid var(--primary-text-color);
+    border-radius: 4px;
+    padding: 24px;
+    transition: all 0.2s ease-in-out;
+    position: absolute;
+    width: 100%;
+    left: 0;
+}
+
+.timeline-item.top .timeline-card {
+    bottom: calc(50% + 58px);
+}
+
+.timeline-item.bottom .timeline-card {
+    top: calc(50% + 58px);
+}
+
+.timeline-card:hover {
+    transform: scale(1.02);
+    background-color: #f0f0f0;
+}
+
+.timeline-date {
+    font-size: 0.9rem;
+    color: var(--secondary-text-color);
+    margin-bottom: 8px;
+}
+
+.timeline-title {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--primary-text-color);
+    font-family: var(--font-mono);
+}
+
+.timeline-company {
+    color: var(--secondary-text-color);
+}
+
+.view-resume-prompt {
+    text-align: center;
+    margin: 2rem 0;
+}
+
+.scroll-prompt {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+#resume-details-section.content-wrapper {
+    max-width: 1200px;
+}
+
+.resume-details-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 2rem;
+    align-items: flex-start;
+}
+
+.resume-text-container .download-button {
+    margin: 1rem 0 2rem 0;
+}
+
+.resume-text-container h3 {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--primary-text-color);
+    padding-bottom: 4px;
+    display: block;
+    width: fit-content;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+.resume-viewer-wrapper {
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+    border: 2px solid var(--primary-text-color);
+    border-radius: 4px;
+    padding: 8px;
+    background-color: white;
+}
+
+.resume-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+.download-button {
+    display: inline-block;
+    background-color: var(--accent-color);
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    margin-bottom: 2rem;
+    border: none;
+}
+
+.download-button:hover {
+    transform: translateY(-2px);
+    background-color: #4831a1;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 768px) {
+    .main-content-full-width {
+        padding: 0 1rem;
+        margin: 1rem auto;
+    }
+    .modal-body {
+        grid-template-columns: 1fr;
+    }
+    .modal-nav {
+        display: none;
+    }
+    .content-wrapper, #resume-details-section.content-wrapper {
+        padding: 0 20px;
+        margin-top: 2rem;
+        max-width: 100%;
+    }
+    .timeline-title-top-center {
+        font-size: 2rem;
+    }
+    .timeline-card {
+        min-width: 240px;
+        max-width: 280px;
+    }
+    
+    .portfolio-page-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+    .portfolio-sidebar {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        padding-right: 0;
+        padding-bottom: 1rem;
+    }
+    .portfolio-nav ul {
+        position: static;
+        display: flex;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    .bio-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+    .resume-details-layout {
+        grid-template-columns: 1fr;
+    }
+    .typed-text {
+        font-size: 2rem;
+    }
+}
+
+@media (max-width: 600px) {
+    .bio-grid {
+        grid-template-columns: 1fr;
+    }
+    .grid-item.large, .grid-item.wide, .grid-item.tall {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+    .typed-text {
+        font-size: 1.5rem;
+    }
+}
+
+/* --- Intro Animation Styles --- */
+
+/* This new wrapper fixes the flexbox layout issue on the homepage */
+.intro-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Hide all nav items except for Home initially */
+.nav-item.hide-initially {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+/* When the intro is done, fade in the nav items */
+body.intro-done .nav-item.hide-initially {
+    opacity: 1;
+    visibility: visible;
+}
+
+.intro-buttons-container {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+/* Keyframe animation for the buttons */
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.intro-btn {
+    background-color: var(--accent-color); /* Changed to purple */
+    color: white;
+    padding: 12px 24px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 700;
+    font-family: var(--font-mono);
+    margin: 0 10px;
+    display: inline-block;
+    border: 2px solid var(--accent-color); /* Changed to purple */
+    transition: all 0.3s ease;
+
+    /* Initially hide for animation */
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.intro-btn:hover {
+    background-color: #4831a1; /* A slightly darker purple for hover */
+    border-color: #4831a1;
+    transform: translateY(-3px) scale(1.05); /* Added scale for more pop */
+}
+
+/* Animate the buttons when the container becomes visible */
+.intro-buttons-container.visible .intro-btn {
+    animation: fade-in-up 0.5s ease forwards;
+}
+
+/* Stagger the animation for each button */
+.intro-buttons-container.visible .intro-btn:nth-child(1) {
+    animation-delay: 0.2s;
+}
+.intro-buttons-container.visible .intro-btn:nth-child(2) {
+    animation-delay: 0.3s;
+}
+.intro-buttons-container.visible .intro-btn:nth-child(3) {
+    animation-delay: 0.4s;
+}
+.intro-buttons-container.visible .intro-btn:nth-child(4) {
+    animation-delay: 0.5s;
+}
+
+
+/* Fade out for main text and buttons */
+.typing-container.fade-out,
+.intro-buttons-container.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}

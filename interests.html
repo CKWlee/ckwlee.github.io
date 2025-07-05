@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interests - Corwin Lee</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <ul class="nav-menu">
+                <div class="nav-pill"></div>
+                <li class="nav-item hide-initially"><a href="bio.html" class="nav-link">Bio</a></li>
+                <li class="nav-item hide-initially"><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                <li class="nav-item hide-initially"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item hide-initially"><a href="resume.html" class="nav-link">Resume</a></li>
+                <li class="nav-item hide-initially"><a href="interests.html" class="nav-link">Interests</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        <section id="interests-menu">
+            <h2 class="section-title">My Interests</h2>
+            <div class="interests-grid">
+                <div class="card interest-card" data-target="film-tv-section">
+                    <h3>Film & TV</h3>
+                    <p>A collection of my movie and television reviews.</p>
+                </div>
+                <div class="card interest-card disabled">
+                    <h3>Sports</h3>
+                    <p>Coming soon: Analytics, thoughts, and celebrations for the Mavs and McLaren.</p>
+                </div>
+                <div class="card interest-card disabled">
+                    <h3>Music & Hobbies</h3>
+                    <p>Coming soon: A look into my other passions, from piano to parkour.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="film-tv-section" class="hidden">
+            <button class="card-link back-to-menu">&larr; Back to all interests</button>
+            <h2 class="section-title">Film & TV Roulette</h2>
+
+            <div id="roulette-container">
+                <div id="review-card" class="card">
+                    <p>Click the button to pull a random review from my collection of over 250 critiques!</p>
+                </div>
+                <button id="spin-button" class="download-button">Spin the Reel</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    <script src="js/script.js"></script>
+</body>
+</html>
