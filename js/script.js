@@ -33,15 +33,28 @@ function initializePortfolioModal() {
 
         const videoSrc = tile.dataset.videoSrc;
 
-        if (videoSrc.endsWith('.mp4') || videoSrc.endsWith('.webm') || videoSrc.endsWith('.ogg')) {
+        // --- CORRECTED LOGIC ---
+        // Checks if the link is a YouTube embed link
+        if (videoSrc.includes('youtube.com/') || videoSrc.includes('youtu.be/')) {
+            modalVideoContainer.innerHTML = `
+                <iframe src="${videoSrc}"
+                        class="youtube-embed"
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>
+                </iframe>`;
+        // Checks for local video files
+        } else if (videoSrc.endsWith('.mp4') || videoSrc.endsWith('.webm') || videoSrc.endsWith('.ogg')) {
             modalVideoContainer.innerHTML = `
                 <video id="modal-video" controls autoplay muted loop>
                     <source src="${videoSrc}" type="video/mp4">
                     Your browser does not support the video tag.
                 </video>`;
+        // Fallback for placeholder images
         } else {
             modalVideoContainer.innerHTML = `<img id="modal-video-placeholder" src="${videoSrc}" alt="Project media" style="width: 100%; height: auto; display: block; border-radius: 4px;">`;
         }
+        // --- END OF CORRECTION ---
 
         const repoLinkElement = modal.querySelector('#modal-repo-link');
         const repoLink = tile.dataset.repoLink;
@@ -67,8 +80,7 @@ function initializePortfolioModal() {
     function closeModal() {
         document.body.classList.remove('modal-open');
         modal.classList.remove('active');
-        const video = modal.querySelector('#modal-video');
-        if (video) video.pause();
+        // Clear the video container to stop any video playback when closing
         modalVideoContainer.innerHTML = '';
     }
 
