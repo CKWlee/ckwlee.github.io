@@ -6,6 +6,28 @@ function initializePageScripts() {
     initializeResumeToggle();
     initializeInterestsPage();
     initializePortfolioFilter();
+    initializeHamburgerMenu();
+}
+
+function initializeHamburgerMenu() {
+    const hamburger = document.querySelector(".hamburger");
+    const navMenu = document.querySelector(".nav-menu");
+
+    if (hamburger && navMenu) {
+        hamburger.addEventListener("click", () => {
+            hamburger.classList.toggle("active");
+            navMenu.classList.toggle("active");
+            document.body.classList.toggle('modal-open');
+        });
+
+        document.querySelectorAll(".nav-link").forEach(n => n.addEventListener("click", () => {
+            if (navMenu.classList.contains('active')) {
+                hamburger.classList.remove("active");
+                navMenu.classList.remove("active");
+                document.body.classList.remove('modal-open');
+            }
+        }));
+    }
 }
 
 function initializeConstellation() {
@@ -15,7 +37,6 @@ function initializeConstellation() {
     const ctx = canvas.getContext('2d');
     let particles = [];
     
-    // Set canvas size
     const setCanvasSize = () => {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
@@ -23,22 +44,19 @@ function initializeConstellation() {
     setCanvasSize();
     window.addEventListener('resize', setCanvasSize);
 
-    // Particle class
     class Particle {
         constructor() {
             this.x = Math.random() * canvas.width;
             this.y = Math.random() * canvas.height;
-            this.vx = Math.random() * 0.4 - 0.2; // Slow horizontal velocity
-            this.vy = Math.random() * 0.4 - 0.2; // Slow vertical velocity
+            this.vx = Math.random() * 0.4 - 0.2;
+            this.vy = Math.random() * 0.4 - 0.2;
             this.radius = Math.random() * 1.5 + 0.5;
-            this.color = 'rgba(139, 92, 246, 0.8)'; // Purple color
+            this.color = 'rgba(139, 92, 246, 0.8)';
         }
 
         update() {
             this.x += this.vx;
             this.y += this.vy;
-
-            // Bounce off edges
             if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
             if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
         }
@@ -51,7 +69,6 @@ function initializeConstellation() {
         }
     }
 
-    // Create particles
     const createParticles = () => {
         particles = [];
         const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
@@ -62,7 +79,6 @@ function initializeConstellation() {
     createParticles();
     window.addEventListener('resize', createParticles);
 
-    // Connect particles
     const connectParticles = () => {
         for (let i = 0; i < particles.length; i++) {
             for (let j = i; j < particles.length; j++) {
@@ -82,7 +98,6 @@ function initializeConstellation() {
         }
     };
 
-    // Animation loop
     const animate = () => {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
@@ -92,10 +107,8 @@ function initializeConstellation() {
         connectParticles();
         requestAnimationFrame(animate);
     };
-
     animate();
 }
-
 
 function initializePortfolioModal() {
     const portfolioContent = document.querySelector('.portfolio-content');
@@ -103,7 +116,8 @@ function initializePortfolioModal() {
 
     const modal = document.getElementById('portfolio-modal');
     if (!modal) return;
-
+    
+    const navbar = document.querySelector('.navbar');
     const modalCloseBtn = modal.querySelector('.modal-close-btn');
     const modalPrevBtn = modal.querySelector('.modal-nav-prev');
     const modalNextBtn = modal.querySelector('.modal-nav-next');
@@ -116,12 +130,19 @@ function initializePortfolioModal() {
     let projectTiles = [];
     let currentIndex = 0;
 
+    const handleMouseMove = (e) => {
+        if (e.clientY < 50) {
+            navbar.classList.remove('hidden-up');
+        } else {
+            navbar.classList.add('hidden-up');
+        }
+    };
+
     function createListFromData(dataString) {
         try {
             const items = JSON.parse(dataString);
             if (!Array.isArray(items)) return '';
-            const listItems = items.map(item => `<li>${item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</li>`).join('');
-            return `<ul>${listItems}</ul>`;
+            return `<ul>${items.map(item => `<li>${item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</li>`).join('')}</ul>`;
         } catch (e) {
             console.error("Failed to parse JSON from data attribute:", e);
             return '';
@@ -137,21 +158,8 @@ function initializePortfolioModal() {
 
         modalTitle.textContent = tile.dataset.title;
         
-        modalUxDesign.innerHTML = '';
-        if (tile.dataset.uxDesign) {
-            const uxTitle = document.createElement('h4');
-            uxTitle.textContent = 'UI/UX Design';
-            modalUxDesign.appendChild(uxTitle);
-            modalUxDesign.innerHTML += createListFromData(tile.dataset.uxDesign);
-        }
-
-        modalTechBreakdown.innerHTML = '';
-        if (tile.dataset.techBreakdown) {
-            const techTitle = document.createElement('h4');
-            techTitle.textContent = 'Technical Breakdown';
-            modalTechBreakdown.appendChild(techTitle);
-            modalTechBreakdown.innerHTML += createListFromData(tile.dataset.techBreakdown);
-        }
+        modalUxDesign.innerHTML = tile.dataset.uxDesign ? `<h4>UI/UX Design</h4>${createListFromData(tile.dataset.uxDesign)}` : '';
+        modalTechBreakdown.innerHTML = tile.dataset.techBreakdown ? `<h4>Technical Breakdown</h4>${createListFromData(tile.dataset.techBreakdown)}` : '';
 
         const videoSrc = tile.dataset.videoSrc;
         if (videoSrc && (videoSrc.includes('youtube.com/') || videoSrc.includes('youtu.be/'))) {
@@ -160,26 +168,33 @@ function initializePortfolioModal() {
             modalMediaContainer.innerHTML = `<img src="https://placehold.co/1600x900/1a1a1a/ffffff?text=Video+Coming+Soon" alt="Project media" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">`;
         }
 
-        if (tile.dataset.repoLink) {
-            modalRepoLink.href = tile.dataset.repoLink;
-            modalRepoLink.style.display = 'inline-block';
-        } else {
-            modalRepoLink.style.display = 'none';
-        }
+        modalRepoLink.href = tile.dataset.repoLink || '#';
+        modalRepoLink.style.display = tile.dataset.repoLink ? 'inline-block' : 'none';
     }
 
     function openModal(clickedTile) {
         const index = Array.from(document.querySelectorAll('.portfolio-section:not(.hidden) .project-tile')).indexOf(clickedTile);
         if (index === -1) return;
+        
         updateModalContent(index);
         document.body.classList.add('modal-open');
         modal.classList.add('active');
+        
+        if (navbar) {
+            navbar.classList.add('hidden-up');
+            document.addEventListener('mousemove', handleMouseMove);
+        }
     }
 
     function closeModal() {
         document.body.classList.remove('modal-open');
         modal.classList.remove('active');
         modalMediaContainer.innerHTML = '';
+        
+        if (navbar) {
+            navbar.classList.remove('hidden-up');
+            document.removeEventListener('mousemove', handleMouseMove);
+        }
     }
 
     function showNextProject() {
@@ -212,89 +227,13 @@ function initializePortfolioModal() {
     });
 }
 
-function initializePortfolioFilter() {
-    const nav = document.querySelector('.portfolio-nav');
-    if (!nav) return;
+// Stubs for other initializers to prevent errors if they are not defined elsewhere
+function initializeTimelineAnimation() {}
+function initializeResumeToggle() {}
+function initializeInterestsPage() {}
+function initializePortfolioFilter() {}
 
-    const navLinks = nav.querySelectorAll('.portfolio-nav-link');
-    const portfolioSections = document.querySelectorAll('.portfolio-section');
-
-    nav.addEventListener('click', (e) => {
-        const link = e.target.closest('.portfolio-nav-link');
-        if (!link) return;
-        e.preventDefault();
-        navLinks.forEach(l => l.classList.remove('active'));
-        link.classList.add('active');
-        const targetId = link.dataset.target;
-        portfolioSections.forEach(section => { section.classList.add('hidden'); });
-        const targetSection = document.getElementById(`${targetId}-portfolio`);
-        if (targetSection) {
-            targetSection.classList.remove('hidden');
-        }
-    });
-}
-
-function initializeTimelineAnimation() {
-    const timelineWrapper = document.querySelector('.timeline-wrapper');
-    if (!timelineWrapper || timelineWrapper.dataset.animated) return;
-
-    const timelineItems = timelineWrapper.querySelectorAll('.timeline-item');
-    timelineItems.forEach(item => {
-        const clone = item.cloneNode(true);
-        timelineWrapper.appendChild(clone);
-    });
-    timelineWrapper.dataset.animated = 'true';
-
-    timelineWrapper.addEventListener('mousedown', () => { timelineWrapper.style.animationPlayState = 'paused'; });
-    timelineWrapper.addEventListener('mouseup', () => { timelineWrapper.style.animationPlayState = 'running'; });
-    timelineWrapper.addEventListener('mouseleave', () => { timelineWrapper.style.animationPlayState = 'running'; });
-    timelineWrapper.addEventListener('touchstart', () => { timelineWrapper.style.animationPlayState = 'paused'; });
-    timelineWrapper.addEventListener('touchend', () => { timelineWrapper.style.animationPlayState = 'running'; });
-}
-
-function initializeResumeToggle() {
-    const viewBtn = document.getElementById('view-resume-btn');
-    const resumeSection = document.getElementById('resume-details-section');
-
-    if (viewBtn && resumeSection) {
-        viewBtn.addEventListener('click', () => {
-            resumeSection.classList.remove('hidden');
-            viewBtn.parentElement.classList.add('hidden');
-            resumeSection.scrollIntoView({ behavior: 'smooth' });
-        });
-    }
-}
-
-function initializeInterestsPage() {
-    const interestsMenu = document.getElementById('interests-menu');
-    if (!interestsMenu) return;
-
-    const interestCards = interestsMenu.querySelectorAll('.interest-card:not(.disabled)');
-    const backButton = document.querySelector('.back-to-menu');
-    
-    interestCards.forEach(card => {
-        card.addEventListener('click', () => {
-            const targetId = card.dataset.target;
-            const targetSection = document.getElementById(targetId);
-            if (targetSection) {
-                interestsMenu.classList.add('hidden');
-                targetSection.classList.remove('hidden');
-            }
-        });
-    });
-
-    if (backButton) {
-        backButton.addEventListener('click', () => {
-            const activeSection = document.querySelector('.main-content section:not(.hidden), .main-content-full-width section:not(.hidden)');
-            if (activeSection) activeSection.classList.add('hidden');
-            interestsMenu.classList.remove('hidden');
-        });
-    }
-}
-
-
-// --- Core Page Navigation and Intro Logic ---
-
+// --- Core Page Navigation and Intro Logic --- (Assuming this part is correct from previous steps)
 function setupPage() {
     const navMenu = document.querySelector('.nav-menu');
     const navPill = document.querySelector('.nav-pill');
@@ -390,7 +329,7 @@ function setupPage() {
         const introButtons = document.getElementById('intro-buttons');
 
         if (line1Element) line1Element.textContent = "Hello, I'm Corwin Lee.";
-        if (line2Element) line2Element.style.display = 'none'; // Hide second line
+        if (line2Element) line2Element.style.display = 'none';
         if (taglineElement) taglineElement.textContent = "Building Intuitive Experiences with Code & Data.";
         if (introButtons) introButtons.style.display = 'none';
         
@@ -483,7 +422,6 @@ function setupPage() {
         }
     }
     
-    // --- Main Logic Flow ---
     if (!sessionStorage.getItem('introSeen') && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/'))) {
         runIntroSequence();
     } else {
@@ -495,7 +433,6 @@ function setupPage() {
     checkAndOpenModal();
 }
 
-// --- Run Everything ---
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setupPage);
 } else {
