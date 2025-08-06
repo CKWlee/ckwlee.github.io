@@ -1,11 +1,101 @@
 // --- Universal Page Script Initializers ---
 function initializePageScripts() {
+    initializeConstellation();
     initializePortfolioModal();
-    initializeTimelineAnimation();
-    initializePortfolioFilter();
+    initializeTimelineAnimation(); 
     initializeResumeToggle();
     initializeInterestsPage();
+    initializePortfolioFilter();
 }
+
+function initializeConstellation() {
+    const canvas = document.getElementById('constellation-canvas');
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    
+    // Set canvas size
+    const setCanvasSize = () => {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    };
+    setCanvasSize();
+    window.addEventListener('resize', setCanvasSize);
+
+    // Particle class
+    class Particle {
+        constructor() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+            this.vx = Math.random() * 0.4 - 0.2; // Slow horizontal velocity
+            this.vy = Math.random() * 0.4 - 0.2; // Slow vertical velocity
+            this.radius = Math.random() * 1.5 + 0.5;
+            this.color = 'rgba(139, 92, 246, 0.8)'; // Purple color
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            // Bounce off edges
+            if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+            if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = this.color;
+            ctx.fill();
+        }
+    }
+
+    // Create particles
+    const createParticles = () => {
+        particles = [];
+        const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
+        }
+    };
+    createParticles();
+    window.addEventListener('resize', createParticles);
+
+    // Connect particles
+    const connectParticles = () => {
+        for (let i = 0; i < particles.length; i++) {
+            for (let j = i; j < particles.length; j++) {
+                const dx = particles[i].x - particles[j].x;
+                const dy = particles[i].y - particles[j].y;
+                const distance = Math.sqrt(dx * dx + dy * dy);
+
+                if (distance < 120) {
+                    ctx.beginPath();
+                    ctx.moveTo(particles[i].x, particles[i].y);
+                    ctx.lineTo(particles[j].x, particles[j].y);
+                    ctx.strokeStyle = `rgba(139, 92, 246, ${1 - distance / 120})`;
+                    ctx.lineWidth = 0.5;
+                    ctx.stroke();
+                }
+            }
+        }
+    };
+
+    // Animation loop
+    const animate = () => {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        connectParticles();
+        requestAnimationFrame(animate);
+    };
+
+    animate();
+}
+
 
 function initializePortfolioModal() {
     const portfolioContent = document.querySelector('.portfolio-content');
@@ -17,56 +107,65 @@ function initializePortfolioModal() {
     const modalCloseBtn = modal.querySelector('.modal-close-btn');
     const modalPrevBtn = modal.querySelector('.modal-nav-prev');
     const modalNextBtn = modal.querySelector('.modal-nav-next');
-    const modalVideoContainer = modal.querySelector('.modal-video-container');
+    const modalMediaContainer = modal.querySelector('.modal-media-container');
+    const modalTitle = modal.querySelector('#modal-title');
+    const modalTechBreakdown = modal.querySelector('#modal-tech-breakdown');
+    const modalUxDesign = modal.querySelector('#modal-ux-design');
+    const modalRepoLink = modal.querySelector('#modal-repo-link');
 
     let projectTiles = [];
     let currentIndex = 0;
 
+    function createListFromData(dataString) {
+        try {
+            const items = JSON.parse(dataString);
+            if (!Array.isArray(items)) return '';
+            const listItems = items.map(item => `<li>${item.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')}</li>`).join('');
+            return `<ul>${listItems}</ul>`;
+        } catch (e) {
+            console.error("Failed to parse JSON from data attribute:", e);
+            return '';
+        }
+    }
+
     function updateModalContent(index) {
         projectTiles = Array.from(document.querySelectorAll('.portfolio-section:not(.hidden) .project-tile'));
-        if (!projectTiles.length) return;
+        if (!projectTiles.length || !projectTiles[index]) return;
+        
         const tile = projectTiles[index];
-        if (!tile) return;
+        currentIndex = index;
 
-        modal.querySelector('#modal-title').textContent = tile.dataset.title;
-        modal.querySelector('#modal-description').textContent = tile.dataset.description;
+        modalTitle.textContent = tile.dataset.title;
+        
+        modalUxDesign.innerHTML = '';
+        if (tile.dataset.uxDesign) {
+            const uxTitle = document.createElement('h4');
+            uxTitle.textContent = 'UI/UX Design';
+            modalUxDesign.appendChild(uxTitle);
+            modalUxDesign.innerHTML += createListFromData(tile.dataset.uxDesign);
+        }
+
+        modalTechBreakdown.innerHTML = '';
+        if (tile.dataset.techBreakdown) {
+            const techTitle = document.createElement('h4');
+            techTitle.textContent = 'Technical Breakdown';
+            modalTechBreakdown.appendChild(techTitle);
+            modalTechBreakdown.innerHTML += createListFromData(tile.dataset.techBreakdown);
+        }
 
         const videoSrc = tile.dataset.videoSrc;
-
-        // --- CORRECTED LOGIC ---
-        // Checks if the link is a YouTube embed link
-        if (videoSrc.includes('youtube.com/') || videoSrc.includes('youtu.be/')) {
-            modalVideoContainer.innerHTML = `
-                <iframe src="${videoSrc}"
-                        class="youtube-embed"
-                        frameborder="0" 
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                        allowfullscreen>
-                </iframe>`;
-        // Checks for local video files
-        } else if (videoSrc.endsWith('.mp4') || videoSrc.endsWith('.webm') || videoSrc.endsWith('.ogg')) {
-            modalVideoContainer.innerHTML = `
-                <video id="modal-video" controls autoplay muted loop>
-                    <source src="${videoSrc}" type="video/mp4">
-                    Your browser does not support the video tag.
-                </video>`;
-        // Fallback for placeholder images
+        if (videoSrc && (videoSrc.includes('youtube.com/') || videoSrc.includes('youtu.be/'))) {
+            modalMediaContainer.innerHTML = `<iframe src="${videoSrc}" class="youtube-embed" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>`;
         } else {
-            modalVideoContainer.innerHTML = `<img id="modal-video-placeholder" src="${videoSrc}" alt="Project media" style="width: 100%; height: auto; display: block; border-radius: 4px;">`;
-        }
-        // --- END OF CORRECTION ---
-
-        const repoLinkElement = modal.querySelector('#modal-repo-link');
-        const repoLink = tile.dataset.repoLink;
-
-        if (repoLink) {
-            repoLinkElement.href = repoLink;
-            repoLinkElement.style.display = 'inline-block';
-        } else {
-            repoLinkElement.style.display = 'none';
+            modalMediaContainer.innerHTML = `<img src="https://placehold.co/1600x900/1a1a1a/ffffff?text=Video+Coming+Soon" alt="Project media" style="width: 100%; height: 100%; object-fit: cover; border-radius: 12px;">`;
         }
 
-        currentIndex = index;
+        if (tile.dataset.repoLink) {
+            modalRepoLink.href = tile.dataset.repoLink;
+            modalRepoLink.style.display = 'inline-block';
+        } else {
+            modalRepoLink.style.display = 'none';
+        }
     }
 
     function openModal(clickedTile) {
@@ -80,8 +179,7 @@ function initializePortfolioModal() {
     function closeModal() {
         document.body.classList.remove('modal-open');
         modal.classList.remove('active');
-        // Clear the video container to stop any video playback when closing
-        modalVideoContainer.innerHTML = '';
+        modalMediaContainer.innerHTML = '';
     }
 
     function showNextProject() {
@@ -114,24 +212,6 @@ function initializePortfolioModal() {
     });
 }
 
-function initializeTimelineAnimation() {
-    const timelineWrapper = document.querySelector('.timeline-wrapper');
-    if (!timelineWrapper || timelineWrapper.dataset.animated) return;
-
-    const timelineItems = timelineWrapper.querySelectorAll('.timeline-item');
-    timelineItems.forEach(item => {
-        const clone = item.cloneNode(true);
-        timelineWrapper.appendChild(clone);
-    });
-    timelineWrapper.dataset.animated = 'true';
-
-    timelineWrapper.addEventListener('mousedown', () => { timelineWrapper.style.animationPlayState = 'paused'; });
-    timelineWrapper.addEventListener('mouseup', () => { timelineWrapper.style.animationPlayState = 'running'; });
-    timelineWrapper.addEventListener('mouseleave', () => { timelineWrapper.style.animationPlayState = 'running'; });
-    timelineWrapper.addEventListener('touchstart', () => { timelineWrapper.style.animationPlayState = 'paused'; });
-    timelineWrapper.addEventListener('touchend', () => { timelineWrapper.style.animationPlayState = 'running'; });
-}
-
 function initializePortfolioFilter() {
     const nav = document.querySelector('.portfolio-nav');
     if (!nav) return;
@@ -154,6 +234,24 @@ function initializePortfolioFilter() {
     });
 }
 
+function initializeTimelineAnimation() {
+    const timelineWrapper = document.querySelector('.timeline-wrapper');
+    if (!timelineWrapper || timelineWrapper.dataset.animated) return;
+
+    const timelineItems = timelineWrapper.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        timelineWrapper.appendChild(clone);
+    });
+    timelineWrapper.dataset.animated = 'true';
+
+    timelineWrapper.addEventListener('mousedown', () => { timelineWrapper.style.animationPlayState = 'paused'; });
+    timelineWrapper.addEventListener('mouseup', () => { timelineWrapper.style.animationPlayState = 'running'; });
+    timelineWrapper.addEventListener('mouseleave', () => { timelineWrapper.style.animationPlayState = 'running'; });
+    timelineWrapper.addEventListener('touchstart', () => { timelineWrapper.style.animationPlayState = 'paused'; });
+    timelineWrapper.addEventListener('touchend', () => { timelineWrapper.style.animationPlayState = 'running'; });
+}
+
 function initializeResumeToggle() {
     const viewBtn = document.getElementById('view-resume-btn');
     const resumeSection = document.getElementById('resume-details-section');
@@ -162,6 +260,7 @@ function initializeResumeToggle() {
         viewBtn.addEventListener('click', () => {
             resumeSection.classList.remove('hidden');
             viewBtn.parentElement.classList.add('hidden');
+            resumeSection.scrollIntoView({ behavior: 'smooth' });
         });
     }
 }
@@ -192,6 +291,7 @@ function initializeInterestsPage() {
         });
     }
 }
+
 
 // --- Core Page Navigation and Intro Logic ---
 
@@ -286,30 +386,31 @@ function setupPage() {
     function setupStaticHomePage() {
         const line1Element = document.getElementById('typed-text-1');
         const line2Element = document.getElementById('typed-text-2');
+        const taglineElement = document.getElementById('tagline');
         const introButtons = document.getElementById('intro-buttons');
 
-        if (line1Element) line1Element.textContent = "Hello, I'm Corwin Lee!";
-        if (line2Element) {
-            line2Element.textContent = "Welcome to my page!";
-            line2Element.classList.add('typing-cursor');
-        }
-        if (introButtons) {
-            introButtons.style.display = 'none';
-        }
+        if (line1Element) line1Element.textContent = "Hello, I'm Corwin Lee.";
+        if (line2Element) line2Element.style.display = 'none'; // Hide second line
+        if (taglineElement) taglineElement.textContent = "Building Intuitive Experiences with Code & Data.";
+        if (introButtons) introButtons.style.display = 'none';
+        
         document.body.classList.add('intro-done');
     }
 
-    // --- RESTORED INTRO FUNCTIONS ---
     function runIntroSequence() {
         const line1Element = document.getElementById('typed-text-1');
         const line2Element = document.getElementById('typed-text-2');
+        const taglineElement = document.getElementById('tagline');
         const introButtonsContainer = document.getElementById('intro-buttons');
 
-        if (!line1Element || !line2Element || !introButtonsContainer) return;
+        if (!line1Element || !line2Element || !introButtonsContainer || !taglineElement) return;
+        
+        taglineElement.style.display = 'none';
+        document.querySelector('.featured-projects-section').style.display = 'none';
 
-        const line1Text = "Hello, I'm Corwin Lee!";
-        const line2Text = "Welcome to my page!";
-        const typingSpeed = 100;
+        const line1Text = "Hello, I'm Corwin Lee.";
+        const line2Text = "Welcome to my page.";
+        const typingSpeed = 80;
 
         function typeWriter(element, text, callback) {
             let i = 0;
@@ -337,7 +438,7 @@ function setupPage() {
             });
         });
     }
-
+    
     function addIntroButtonListeners() {
         const introButtons = document.querySelectorAll('.intro-btn');
         introButtons.forEach(button => {
@@ -360,6 +461,27 @@ function setupPage() {
             });
         });
     }
+
+    window.navigateToPortfolio = function(projectId) {
+        sessionStorage.setItem('targetProject', projectId);
+        const portfolioLink = document.querySelector('a[href="portfolio.html"]');
+        if (portfolioLink) {
+            portfolioLink.click();
+        }
+    }
+
+    function checkAndOpenModal() {
+        const targetProjectId = sessionStorage.getItem('targetProject');
+        if (targetProjectId) {
+            const targetTile = document.getElementById(targetProjectId);
+            if (targetTile) {
+                setTimeout(() => {
+                    targetTile.click();
+                    sessionStorage.removeItem('targetProject');
+                }, 100);
+            }
+        }
+    }
     
     // --- Main Logic Flow ---
     if (!sessionStorage.getItem('introSeen') && (window.location.pathname.endsWith('index.html') || window.location.pathname.endsWith('/'))) {
@@ -370,6 +492,7 @@ function setupPage() {
 
     setInitialState();
     initializePageScripts();
+    checkAndOpenModal();
 }
 
 // --- Run Everything ---

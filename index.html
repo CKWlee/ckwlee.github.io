@@ -7,9 +7,10 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <canvas id="constellation-canvas"></canvas>
     <header>
         <nav class="navbar">
             <ul class="nav-menu">
@@ -28,14 +29,50 @@
             <div class="typing-container">
                 <p id="typed-text-1" class="typed-text"></p>
                 <p id="typed-text-2" class="typed-text"></p>
+                <p id="tagline" class="tagline"></p>
             </div>
             <div id="intro-buttons" class="intro-buttons-container">
-                <a href="bio.html" class="intro-btn">Bio</a>
                 <a href="portfolio.html" class="intro-btn">Portfolio</a>
+                <a href="bio.html" class="intro-btn">Bio</a>
                 <a href="resume.html" class="intro-btn">Resume</a>
                 <a href="interests.html" class="intro-btn">Interests</a>
             </div>
         </div>
+
+        <section id="featured-projects" class="featured-projects-section">
+            <h2 class="section-title">Featured Projects</h2>
+            <div class="project-grid">
+                 <div class="card project-tile-featured" onclick="window.navigateToPortfolio('letterboxd-wrapped')">
+                    <h3>Letterboxd Wrapped</h3>
+                    <p>A front-end data visualization app in React to analyze and explore your personal movie-watching habits.</p>
+                    <div class="tech-tags">
+                        <span>React</span>
+                        <span>UI/UX Design</span>
+                        <span>Data Viz</span>
+                        <span>JavaScript</span>
+                    </div>
+                </div>
+                <div class="card project-tile-featured" onclick="window.navigateToPortfolio('card-counting-tutor')">
+                    <h3>Card Counting Tutor</h3>
+                    <p>A Blackjack simulator that teaches the Hi-Lo card counting strategy using a working game system.</p>
+                     <div class="tech-tags">
+                        <span>React</span>
+                        <span>Game Logic</span>
+                        <span>State Management</span>
+                    </div>
+                </div>
+                <div class="card project-tile-featured" onclick="window.navigateToPortfolio('ai-audiobook-reader')">
+                    <h3>AI Audiobook Reader</h3>
+                    <p>A full-stack web app that converts PDF files into audio using an open-source text-to-speech engine.</p>
+                     <div class="tech-tags">
+                        <span>Python</span>
+                        <span>Flask</span>
+                        <span>Full-Stack</span>
+                        <span>AI/ML</span>
+                    </div>
+                </div>
+            </div>
+        </section>
     </main>
 
     <script src="js/script.js"></script>
