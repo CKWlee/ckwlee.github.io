@@ -7,32 +7,32 @@
     <link rel="stylesheet" href="css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <canvas id="constellation-canvas"></canvas>
     <header>
-<nav class="navbar">
-    <ul class="nav-menu">
-        <div class="nav-pill"></div>
-        <li class="nav-item hide-initially"><a href="bio.html" class="nav-link">Bio</a></li>
-        <li class="nav-item hide-initially"><a href="portfolio.html" class="nav-link">Portfolio</a></li>
-        <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
-        <li class="nav-item hide-initially"><a href="resume.html" class="nav-link">Resume</a></li>
-        <li class="nav-item hide-initially"><a href="interests.html" class="nav-link">Interests</a></li>
-    </ul>
-    <button class="hamburger">
-        <span class="bar"></span>
-        <span class="bar"></span>
-        <span class="bar"></span>
-    </button>
-</nav>
+        <nav class="navbar">
+            <ul class="nav-menu">
+                <div class="nav-pill"></div>
+                <li class="nav-item hide-initially"><a href="bio.html" class="nav-link">Bio</a></li>
+                <li class="nav-item hide-initially"><a href="portfolio.html" class="nav-link">Portfolio</a></li>
+                <li class="nav-item"><a href="index.html" class="nav-link">Home</a></li>
+                <li class="nav-item hide-initially"><a href="resume.html" class="nav-link">Resume</a></li>
+                <li class="nav-item hide-initially"><a href="interests.html" class="nav-link">Interests</a></li>
+            </ul>
+             <button class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
+        </nav>
     </header>
 
     <main class="main-content portfolio-page-layout">
         <aside class="portfolio-sidebar">
             <nav class="portfolio-nav">
-                <ul>
+                <div class="portfolio-nav-pill"></div> <ul>
                     <li><a href="#" class="portfolio-nav-link active" data-target="coding">Development</a></li>
                     <li><a href="#" class="portfolio-nav-link" data-target="photography">Photography</a></li>
                     <li><a href="#" class="portfolio-nav-link" data-target="videography">Videography</a></li>
@@ -44,7 +44,6 @@
             <section id="coding-portfolio" class="portfolio-section">
                 <h2 class="section-title">Development Projects</h2>
                 <div class="project-grid">
-                    <!-- Letterboxd Wrapped -->
                     <div class="card project-tile" 
                          id="letterboxd-wrapped"
                          data-title="Letterboxd Wrapped"
@@ -59,7 +58,6 @@
                             <span class="card-link">View Details &rarr;</span>
                         </div>
                     </div>
-                    <!-- Card Counting Tutor -->
                     <div class="card project-tile" 
                          id="card-counting-tutor"
                          data-title="Card Counting Tutor"
@@ -74,7 +72,6 @@
                             <span class="card-link">View Details &rarr;</span>
                         </div>
                     </div>
-                    <!-- AI Audiobook Reader -->
                     <div class="card project-tile" 
                          id="ai-audiobook-reader"
                          data-title="AI Audiobook Reader"
@@ -92,18 +89,13 @@
                 </div>
             </section>
 
-            <!-- Photography and Videography sections remain the same -->
             <section id="photography-portfolio" class="portfolio-section hidden">
                 <h2 class="section-title">Photography</h2>
-                <div class="project-grid">
-                    <!-- Photography items here -->
-                </div>
+                <p>Coming soon...</p>
             </section>
             <section id="videography-portfolio" class="portfolio-section hidden">
                 <h2 class="section-title">Videography</h2>
-                <div class="project-grid">
-                    <!-- Videography items here -->
-                </div>
+                <p>Coming soon...</p>
             </section>
         </div>
 
@@ -111,9 +103,7 @@
             <div class="modal-content">
                 <button class="modal-close-btn">&times;</button>
                 <div class="modal-body">
-                    <div class="modal-media-container">
-                        <!-- Video/Image will be injected here by JS -->
-                    </div>
+                    <div class="modal-media-container"></div>
                     <div class="modal-details">
                         <h3 id="modal-title"></h3>
                         <div id="modal-ux-design"></div>

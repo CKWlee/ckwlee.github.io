@@ -351,8 +351,8 @@ main.is-leaving { opacity: 0; }
 .modal-details #modal-repo-link { display: inline-block; margin-top: 1.5rem; }
 .modal-close-btn {
     position: absolute;
-    top: 1rem;      /* Moved closer to the top corner */
-    right: 1rem;    /* Moved closer to the right corner */
+    top: 1rem;
+    right: 1rem;
     font-size: 2.5rem;
     color: #9ca3af;
     background: none;
@@ -374,19 +374,42 @@ main.is-leaving { opacity: 0; }
 .modal-nav-prev { left: 2rem; }
 .modal-nav-next { right: 2rem; }
 
-/* --- Responsive & Other Styles Continue Below --- */
+/* =========== PORTFOLIO PAGE STYLES =========== */
 .portfolio-page-layout { display: grid; grid-template-columns: 200px 1fr; gap: 3rem; max-width: 1200px; }
 .portfolio-sidebar { padding-right: 2rem; }
-.portfolio-nav ul { list-style: none; padding: 0; margin: 0; position: sticky; top: 6rem; }
+.portfolio-nav {
+    position: sticky; /* Changed from relative to sticky */
+    top: 6rem;
+}
+.portfolio-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative; /* Add position relative here */
+    z-index: 2;
+}
 .portfolio-nav-link {
     display: block; padding: 0.75rem 1rem; margin-bottom: 0.5rem; text-decoration: none;
     color: var(--secondary-text-color); font-weight: 700; border-radius: 8px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    transition: color 0.2s ease;
+    position: relative;
+    z-index: 2;
 }
-.portfolio-nav-link:hover { background-color: var(--bg-soft-accent); color: var(--primary-text-color); }
-.portfolio-nav-link.active { background-color: var(--accent-color); color: white; }
+.portfolio-nav-link:hover { color: var(--primary-text-color); }
+.portfolio-nav-link.active { color: white; }
+.portfolio-nav-pill {
+    position: absolute;
+    left: 0;
+    top: 0; /* Pill is positioned relative to the nav now */
+    width: 100%;
+    background-color: var(--accent-color);
+    border-radius: 8px;
+    z-index: 1;
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
 .section-title { font-size: 2rem; font-weight: 500; margin-bottom: 2rem; margin-top: 0; }
 
+/* --- Bio, Resume, and other styles from previous steps --- */
 .bio-grid { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: minmax(150px, auto); grid-auto-flow: dense; gap: 1.5rem; }
 .grid-item {
     border: 1px solid var(--border-color); padding: 1.5rem; border-radius: 12px;
@@ -414,7 +437,13 @@ main.is-leaving { opacity: 0; }
 .card-label { position: absolute; bottom: 0; left: 0; background-color: rgba(17, 24, 39, 0.8); color: white; padding: 0.5rem 1rem; font-size: 0.9rem; font-family: var(--font-mono); }
 
 @keyframes scroll-timeline { from { transform: translateX(0); } to { transform: translateX(calc(-50%)); } }
-.timeline-container { width: 100%; margin: 2rem auto 0; overflow-x: hidden; padding-top: 80px; position: relative; }
+.timeline-container {
+    width: 100%;
+    margin: 2rem auto 0;
+    overflow-x: hidden;
+    padding-top: 120px;
+    position: relative;
+}
 .timeline-title-top-center { position: absolute; top: 0; left: 50%; transform: translateX(-50%); z-index: 1; font-size: 2.5rem; font-weight: 500; color: var(--primary-text-color); }
 .timeline-wrapper { position: relative; height: 450px; padding: 0; box-sizing: content-box; display: flex; align-items: center; width: calc(320px * 12); animation: scroll-timeline 60s linear infinite; }
 .timeline-line { position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: var(--border-color); transform: translateY(-50%); }
@@ -451,7 +480,9 @@ main.is-leaving { opacity: 0; }
     .modal-nav { display: none; }
     .portfolio-page-layout { grid-template-columns: 1fr; gap: 2rem; }
     .portfolio-sidebar { border-right: none; border-bottom: 1px solid var(--border-color); padding-right: 0; padding-bottom: 1rem; }
+    .portfolio-nav { position: static; }
     .portfolio-nav ul { position: static; display: flex; justify-content: center; gap: 0.5rem; }
+    .portfolio-nav-pill { display: none; } /* Hide sidebar pill on mobile */
     .bio-grid { grid-template-columns: 1fr 1fr; }
     .resume-details-layout { grid-template-columns: 1fr; }
     .typed-text { font-size: 2rem; }

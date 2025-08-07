@@ -227,13 +227,114 @@ function initializePortfolioModal() {
     });
 }
 
-// Stubs for other initializers to prevent errors if they are not defined elsewhere
-function initializeTimelineAnimation() {}
-function initializeResumeToggle() {}
-function initializeInterestsPage() {}
-function initializePortfolioFilter() {}
+function initializePortfolioFilter() {
+    const nav = document.querySelector('.portfolio-nav');
+    if (!nav) return;
 
-// --- Core Page Navigation and Intro Logic --- (Assuming this part is correct from previous steps)
+    const navPill = nav.querySelector('.portfolio-nav-pill');
+    const navLinks = nav.querySelectorAll('.portfolio-nav-link');
+    const portfolioSections = document.querySelectorAll('.portfolio-section');
+
+    function movePill(target) {
+        if (!target || !navPill) return;
+        navPill.style.height = `${target.offsetHeight}px`;
+        navPill.style.transform = `translateY(${target.offsetTop}px)`;
+        navLinks.forEach(l => l.classList.remove('active'));
+        target.classList.add('active');
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            const currentActive = nav.querySelector('.portfolio-nav-link.active');
+            if (currentActive === link) return;
+
+            movePill(link);
+            const targetId = link.dataset.target;
+
+            portfolioSections.forEach(section => {
+                section.classList.add('hidden');
+            });
+
+            const targetSection = document.getElementById(`${targetId}-portfolio`);
+            if (targetSection) {
+                targetSection.classList.remove('hidden');
+            }
+        });
+    });
+
+    const initialActiveLink = nav.querySelector('.portfolio-nav-link.active');
+    if (initialActiveLink) {
+        setTimeout(() => {
+            navPill.style.transition = 'none';
+            movePill(initialActiveLink);
+            setTimeout(() => {
+                navPill.style.transition = 'transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), height 0.4s cubic-bezier(0.25, 1, 0.5, 1)';
+            }, 50);
+        }, 100);
+    }
+}
+
+// RESTORED THIS FUNCTION
+function initializeTimelineAnimation() {
+    const timelineWrapper = document.querySelector('.timeline-wrapper');
+    if (!timelineWrapper || timelineWrapper.dataset.animated) return;
+
+    const timelineItems = timelineWrapper.querySelectorAll('.timeline-item');
+    timelineItems.forEach(item => {
+        const clone = item.cloneNode(true);
+        timelineWrapper.appendChild(clone);
+    });
+    timelineWrapper.dataset.animated = 'true';
+
+    timelineWrapper.addEventListener('mousedown', () => { timelineWrapper.style.animationPlayState = 'paused'; });
+    timelineWrapper.addEventListener('mouseup', () => { timelineWrapper.style.animationPlayState = 'running'; });
+    timelineWrapper.addEventListener('mouseleave', () => { timelineWrapper.style.animationPlayState = 'running'; });
+    timelineWrapper.addEventListener('touchstart', () => { timelineWrapper.style.animationPlayState = 'paused'; });
+    timelineWrapper.addEventListener('touchend', () => { timelineWrapper.style.animationPlayState = 'running'; });
+}
+
+function initializeResumeToggle() {
+    const viewBtn = document.getElementById('view-resume-btn');
+    const resumeSection = document.getElementById('resume-details-section');
+
+    if (viewBtn && resumeSection) {
+        viewBtn.addEventListener('click', () => {
+            resumeSection.classList.remove('hidden');
+            viewBtn.parentElement.classList.add('hidden');
+            resumeSection.scrollIntoView({ behavior: 'smooth' });
+        });
+    }
+}
+
+function initializeInterestsPage() {
+    const interestsMenu = document.getElementById('interests-menu');
+    if (!interestsMenu) return;
+
+    const interestCards = interestsMenu.querySelectorAll('.interest-card:not(.disabled)');
+    const backButton = document.querySelector('.back-to-menu');
+    
+    interestCards.forEach(card => {
+        card.addEventListener('click', () => {
+            const targetId = card.dataset.target;
+            const targetSection = document.getElementById(targetId);
+            if (targetSection) {
+                interestsMenu.classList.add('hidden');
+                targetSection.classList.remove('hidden');
+            }
+        });
+    });
+
+    if (backButton) {
+        backButton.addEventListener('click', () => {
+            const activeSection = document.querySelector('.main-content section:not(.hidden), .main-content-full-width section:not(.hidden)');
+            if (activeSection) activeSection.classList.add('hidden');
+            interestsMenu.classList.remove('hidden');
+        });
+    }
+}
+
 function setupPage() {
     const navMenu = document.querySelector('.nav-menu');
     const navPill = document.querySelector('.nav-pill');
