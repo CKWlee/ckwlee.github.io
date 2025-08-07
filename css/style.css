@@ -77,6 +77,16 @@ body.modal-open {
     transition: opacity 0.5s ease-in-out 0.2s;
 }
 
+.typing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+body.intro-done .tagline {
+    opacity: 1;
+}
+
 body.intro-done .tagline {
     opacity: 1;
 }
