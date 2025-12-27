@@ -1,0 +1,23 @@
+{
+  "name": "corwin-lee-portfolio",
+  "version": "1.0.0",
+  "description": "Personal portfolio website for Corwin Lee",
+  "scripts": {
+    "start": "npx @11ty/eleventy --serve",
+    "build": "npx @11ty/eleventy",
+    "clean": "rimraf _site",
+    "prod": "npm run clean && npx @11ty/eleventy && npx postcss _site/css/*.css --use cssnano --no-map --dir _site/css && npx terser _site/js/script.js -o _site/js/script.js --compress --mangle"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.0.0",
+    "cssnano": "^6.0.0",
+    "html-minifier-terser": "^7.2.0",
+    "postcss": "^8.4.35",
+    "postcss-cli": "^11.0.0",
+    "rimraf": "^5.0.5",
+    "terser": "^5.29.2"
+  },
+  "keywords": ["portfolio", "personal-website"],
+  "author": "Corwin Lee",
+  "license": "MIT"
+}

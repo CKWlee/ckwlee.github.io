@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }} - {{ site.title }}</title>
+    <meta name="description" content="{{ description or site.description }}">
+    <link rel="canonical" href="{{ site.url }}{{ page.url | url }}">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="{{ title }} - {{ site.title }}">
+    <meta property="og:description" content="{{ description or site.description }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ site.url }}{{ page.url | url }}">
+    <meta property="og:image" content="{{ site.url }}{{ site.image }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ title }} - {{ site.title }}">
+    <meta name="twitter:description" content="{{ description or site.description }}">
+    <meta name="twitter:image" content="{{ site.url }}{{ site.image }}">
+    
+    <!-- Preconnect for performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="/css/base.css">
+    <link rel="stylesheet" href="/css/components.css">
+    <link rel="stylesheet" href="/css/layout.css">
+    <link rel="stylesheet" href="/css/pages.css">
+    
+    {% block head %}{% endblock %}
+</head>
+<body>
+    {% if showCanvas !== false %}
+    <canvas id="constellation-canvas"></canvas>
+    {% endif %}
+    
+    <header>
+        {% include "navbar.njk" %}
+    </header>
+
+    <main class="{{ mainClass | default('main-content') }}">
+        {{ content | safe }}
+    </main>
+
+    {% block scripts %}{% endblock %}
+    
+    <!-- External libraries (if needed) -->
+    {% if includesPapaParse %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+    {% endif %}
+    
+    <!-- Main script -->
+    <script src="/js/script.js"></script>
+</body>
+</html>

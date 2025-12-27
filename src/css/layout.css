@@ -1,0 +1,306 @@
+/* =============================================
+   LAYOUT STYLES
+   Page layouts, grids, and structural elements
+   ============================================= */
+
+/* --- Main Content Layouts --- */
+.main-content,
+.content-wrapper,
+.main-content-full-width {
+    width: 100%;
+    max-width: 1200px;
+    margin: var(--spacing-3xl) auto;
+    padding: 0 var(--spacing-xl);
+    box-sizing: border-box;
+    position: relative;
+    z-index: var(--z-base);
+}
+
+/* --- Home Page Layout --- */
+.main-content-home {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    text-align: center;
+}
+
+.intro-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.typing-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.typing-container.fade-out,
+.intro-buttons-container.fade-out {
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity var(--transition-slow), transform var(--transition-slow);
+}
+
+.intro-buttons-container {
+    text-align: center;
+    margin-top: 2.5rem;
+}
+
+/* --- Project Grid --- */
+.project-grid,
+.interests-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--spacing-lg);
+}
+
+/* --- Portfolio Page Layout --- */
+.portfolio-page-layout {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: var(--spacing-2xl);
+    max-width: 1200px;
+}
+
+.portfolio-sidebar {
+    padding-right: var(--spacing-xl);
+}
+
+.portfolio-nav {
+    position: sticky;
+    top: 6rem;
+}
+
+.portfolio-nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.portfolio-nav-link {
+    display: block;
+    padding: 0.75rem var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    text-decoration: none;
+    color: var(--secondary-text-color);
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    transition: color var(--transition-fast);
+    position: relative;
+    z-index: 2;
+}
+
+.portfolio-nav-link:hover {
+    color: var(--primary-text-color);
+}
+
+.portfolio-nav-link.active {
+    color: white;
+}
+
+.portfolio-nav-pill {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: var(--accent-color);
+    border-radius: var(--radius-sm);
+    z-index: 1;
+    transition: transform var(--transition-smooth), height var(--transition-smooth);
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 500;
+    margin-bottom: var(--spacing-xl);
+    margin-top: 0;
+}
+
+/* --- Bio Grid Layout --- */
+.bio-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-auto-rows: minmax(150px, auto);
+    grid-auto-flow: dense;
+    gap: var(--spacing-lg);
+}
+
+.grid-item {
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-normal);
+    background-color: var(--card-bg-color);
+}
+
+.grid-item:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-color);
+    z-index: 10;
+}
+
+.grid-item h1 {
+    font-family: var(--font-main);
+    font-size: 3rem;
+    margin: 0 0 var(--spacing-md) 0;
+    font-weight: 500;
+}
+
+.grid-item h3 {
+    margin: 0 0 var(--spacing-md) 0;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    border-bottom: 2px solid var(--primary-text-color);
+    display: inline-block;
+    padding-bottom: 4px;
+    font-family: var(--font-mono);
+    font-weight: 500;
+}
+
+.grid-item p {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--secondary-text-color);
+}
+
+.grid-item.large {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.grid-item.wide {
+    grid-column: span 2;
+}
+
+.grid-item.tall {
+    grid-row: span 2;
+}
+
+.grid-item.accent-bg {
+    background-color: var(--accent-color);
+    color: white;
+    border-color: var(--accent-color);
+}
+
+.grid-item.accent-bg h3 {
+    border-bottom-color: white;
+}
+
+.grid-item.accent-bg p {
+    color: rgba(249, 250, 251, 0.9);
+}
+
+.skills-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.skills-list li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.skills-list li span {
+    font-weight: 700;
+    color: var(--primary-text-color);
+}
+
+.image-card {
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    padding: 0;
+    overflow: hidden;
+}
+
+.card-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(17, 24, 39, 0.8);
+    color: white;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.9rem;
+    font-family: var(--font-mono);
+}
+
+/* --- Resume Details Layout --- */
+.resume-details-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: var(--spacing-2xl);
+    align-items: flex-start;
+}
+
+.resume-text-container .download-button {
+    margin: var(--spacing-md) 0 var(--spacing-xl) 0;
+}
+
+.resume-text-container h3 {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--primary-text-color);
+    padding-bottom: 4px;
+    display: block;
+    width: fit-content;
+    margin-top: 0;
+    margin-bottom: var(--spacing-md);
+    font-weight: 500;
+}
+
+.resume-viewer-wrapper {
+    width: 100%;
+    aspect-ratio: 8.5 / 11;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 8px;
+    background-color: white;
+}
+
+.resume-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+    border-radius: var(--radius-sm);
+}
+
+.view-resume-prompt {
+    text-align: center;
+    margin: var(--spacing-xl) 0;
+}
+
+.scroll-prompt {
+    font-size: 1.1rem;
+    color: var(--secondary-text-color);
+    text-align: center;
+    margin-bottom: var(--spacing-md);
+}
+
+#resume-details-section.content-wrapper {
+    max-width: 1200px;
+}
+
+/* --- Featured Projects Section --- */
+.featured-projects-section {
+    width: 100%;
+    max-width: 1100px;
+    margin: var(--spacing-3xl) auto;
+    padding: var(--spacing-2xl) var(--spacing-xl);
+    background-color: rgba(31, 41, 55, 0.5);
+    backdrop-filter: blur(10px);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    display: none;
+}
+
+body.intro-done .featured-projects-section {
+    display: block;
+}

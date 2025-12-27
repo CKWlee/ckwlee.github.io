@@ -1,0 +1,86 @@
+---
+layout: base.njk
+title: Portfolio
+mainClass: main-content portfolio-page-layout
+permalink: /portfolio.html
+description: "Corwin Lee's portfolio projects across development, photography, and videography."
+---
+
+<aside class="portfolio-sidebar">
+    <nav class="portfolio-nav">
+        <div class="portfolio-nav-pill"></div>
+        <ul>
+            <li><a href="#" class="portfolio-nav-link active" data-target="coding">Development</a></li>
+            <li><a href="#" class="portfolio-nav-link" data-target="photography">Photography</a></li>
+            <li><a href="#" class="portfolio-nav-link" data-target="videography">Videography</a></li>
+        </ul>
+    </nav>
+</aside>
+
+<div class="portfolio-content">
+    <section id="coding-portfolio" class="portfolio-section">
+        <h2 class="section-title">Development Projects</h2>
+        <div class="project-grid">
+            <a class="card project-tile" 
+                 href="#letterboxd-wrapped"
+                 id="letterboxd-wrapped"
+                 role="button"
+                 aria-label="Open Letterboxd Wrapped details"
+                 data-title="Letterboxd Wrapped"
+                 data-video-src="https://www.youtube.com/embed/lP_lbyokius?si=5dBWl8tQ30A4ugfc"
+                 data-repo-link="https://github.com/CKWlee/letterboxd-wrapped"
+                 data-tech-breakdown='["Built with React, utilizing functional components and hooks for state management.","Client-side file parsing implemented with JSZip and PapaParse to handle user-uploaded ZIP/CSV files directly in the browser.","Data visualization achieved with Recharts for interactive charts and d3-cloud for dynamic word clouds.","Includes a custom sentiment analysis module to interpret text from user reviews."]'
+                 data-ux-design='["**The Problem:** Letterboxd users have rich data, but the default export is an uninspiring CSV file.","**The Goal:** Create a visually engaging and intuitive dashboard to help users discover personal insights about their viewing habits.","**Design Process:** I focused on a clean, single-page layout to avoid overwhelming users. I chose specific chart types (bar, pie, word cloud) that best represented different data points, ensuring clarity and immediate understanding. The user flow is simple: upload a file, and instantly see your personalized dashboard."]'>
+                <h3>Letterboxd Wrapped</h3>
+                <p>A front-end data visualization app in React to analyze and explore your personal movie-watching habits.</p>
+                <div class="card-footer">
+                    <span class="card-link">View Details &rarr;</span>
+                </div>
+            </a>
+            <a class="card project-tile" 
+                 href="#card-counting-tutor"
+                 id="card-counting-tutor"
+                 role="button"
+                 aria-label="Open Card Counting Tutor details"
+                 data-title="Card Counting Tutor"
+                 data-video-src="https://www.youtube.com/embed/S9RtdvkqW6w?si=56A5KUJZrbLskKJh"
+                 data-repo-link="https://github.com/CKWlee/card-counting-tutor"
+                 data-tech-breakdown='["Developed in React, managing the entire game state including player/dealer hands, deck composition, and the running count.","Implemented core Blackjack logic, including dealer actions (hit/stand on soft 17), splitting, and doubling down.","The card deck is a dynamic array of objects, shuffled and dealt from to accurately simulate a real game.","Real-time feedback system updates the UI based on the user's counting accuracy."]'
+                 data-ux-design='["**The Problem:** Learning card counting is difficult and requires constant practice.","**The Goal:** Build a simulator that not only lets you play Blackjack but actively teaches the Hi-Lo strategy.","**Design Process:** The UI is designed to be clean and focused, mimicking a real card table. Key information like the running count and user feedback is displayed prominently but without clutter. The user flow guides the player through hands, providing immediate correction to reinforce learning."]'>
+                <h3>Card Counting Tutor</h3>
+                <p>A Blackjack simulator that teaches the Hi-Lo card counting strategy using a working game system.</p>
+                <div class="card-footer">
+                    <span class="card-link">View Details &rarr;</span>
+                </div>
+            </a>
+            <a class="card project-tile" 
+                 href="#ai-audiobook-reader"
+                 id="ai-audiobook-reader"
+                 role="button"
+                 aria-label="Open AI Audiobook Reader details"
+                 data-title="AI Audiobook Reader"
+                 data-video-src="https://www.youtube.com/embed/your_video_id_here"
+                 data-repo-link="https://github.com/CKWlee/ai-audiobook-reader"
+                 data-tech-breakdown='["Full-stack application with a Python backend using the Flask framework.","The backend API handles PDF uploads, extracts text content, and interfaces with the Text-to-Speech engine.","Integrated Coqui TTS, an open-source AI engine, to generate natural-sounding speech from the extracted text.","The front-end, built with vanilla JavaScript, communicates with the API and streams the generated audio for in-browser playback."]'
+                 data-ux-design='["**The Problem:** Many academic texts or documents are only available as PDFs, making them inaccessible for auditory learners or for listening on the go.","**The Goal:** Create a simple tool to convert any PDF into an audiobook instantly.","**Design Process:** The user interface is intentionally minimalist. The entire user flow consists of a single action: uploading a file. This removes all friction and makes the tool immediately useful. The focus was on creating a functional, single-purpose application that solves a clear user need."]'>
+                <h3>AI Audiobook Reader</h3>
+                <p>A web app that converts PDF files into audio using an open-source text-to-speech engine.</p>
+                <div class="card-footer">
+                    <span class="card-link">View Details &rarr;</span>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <section id="photography-portfolio" class="portfolio-section hidden">
+        <h2 class="section-title">Photography</h2>
+        <p>Coming soon...</p>
+    </section>
+    
+    <section id="videography-portfolio" class="portfolio-section hidden">
+        <h2 class="section-title">Videography</h2>
+        <p>Coming soon...</p>
+    </section>
+</div>
+
+{% include "portfolio-modal.njk" %}
