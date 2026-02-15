@@ -5,19 +5,14 @@
 
 /* --- CSS Custom Properties (Design Tokens) --- */
 :root {
-    /* Colors */
-    --bg-color: #111827;
-    --bg-soft-accent: #1F2937;
-    --primary-text-color: #F9FAFB;
-    --secondary-text-color: #9CA3AF;
-    --card-bg-color: #1F2937;
-    --border-color: #374151;
+    /* Accent (shared across themes) */
     --accent-color: #8B5CF6;
     --accent-color-dark: #7C3AED;
-    
+
     /* Typography */
-    --font-main: 'Sora', sans-serif;
-    --font-mono: 'Sora', sans-serif;
+    --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-heading: 'Instrument Serif', Georgia, 'Times New Roman', serif;
+    --font-mono: 'IBM Plex Mono', 'Courier New', Courier, monospace;
     
     /* Spacing */
     --spacing-xs: 0.25rem;
@@ -49,6 +44,37 @@
     --z-hamburger: 1001;
 }
 
+/* --- Dark Theme (default) --- */
+:root,
+[data-theme="dark"] {
+    --bg-color: #111827;
+    --bg-soft-accent: #1F2937;
+    --primary-text-color: #F9FAFB;
+    --secondary-text-color: #9CA3AF;
+    --card-bg-color: #1F2937;
+    --border-color: #374151;
+    --navbar-bg: rgba(17, 24, 39, 0.8);
+    --modal-overlay-bg: rgba(17, 24, 39, 0.5);
+    --card-hover-bg: rgba(55, 65, 81, 0.6);
+    --constellation-particle: rgba(139, 92, 246, 0.8);
+    --constellation-line: 139, 92, 246;
+}
+
+/* --- Light Theme --- */
+[data-theme="light"] {
+    --bg-color: #F9FAFB;
+    --bg-soft-accent: #F3F4F6;
+    --primary-text-color: #111827;
+    --secondary-text-color: #6B7280;
+    --card-bg-color: #FFFFFF;
+    --border-color: #E5E7EB;
+    --navbar-bg: rgba(249, 250, 251, 0.85);
+    --modal-overlay-bg: rgba(249, 250, 251, 0.6);
+    --card-hover-bg: rgba(243, 244, 246, 0.8);
+    --constellation-particle: rgba(139, 92, 246, 0.5);
+    --constellation-line: 139, 92, 246;
+}
+
 /* --- Canvas Background --- */
 #constellation-canvas {
     position: fixed;
@@ -77,9 +103,32 @@ body.modal-open {
     overflow: hidden;
 }
 
+/* --- Heading Typography --- */
+h1, h2 {
+    font-family: var(--font-heading);
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+h3, h4, h5, h6 {
+    font-family: var(--font-main);
+    font-weight: 600;
+    line-height: 1.3;
+}
+
 /* --- Utility Classes --- */
 .hidden {
     display: none;
+}
+
+/* --- Scroll Reveal --- */
+.reveal {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.reveal.revealed {
+    animation: fade-in-up 0.5s ease forwards;
 }
 
 /* --- Animations & Keyframes --- */

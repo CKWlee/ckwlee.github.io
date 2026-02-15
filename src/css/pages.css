@@ -5,9 +5,9 @@
 
 /* --- Home Page Typing Effect --- */
 .typed-text {
-    font-family: var(--font-main);
+    font-family: var(--font-heading);
     font-size: 2.5rem;
-    font-weight: 500;
+    font-weight: 400;
     margin: 0;
     white-space: nowrap;
     overflow: hidden;
@@ -16,7 +16,7 @@
 
 .tagline {
     font-family: var(--font-main);
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     color: var(--secondary-text-color);
     margin-top: var(--spacing-sm);
     opacity: 0;
@@ -31,6 +31,30 @@ body.intro-done .tagline {
     border-right: 4px solid var(--primary-text-color);
     animation: blink-caret 0.75s step-end infinite;
 }
+
+/* --- Rotating Word in Intro --- */
+.rotating-word {
+    display: inline-block;
+    color: var(--accent-color);
+    font-weight: 400;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.rotating-word.rotate-out {
+    opacity: 0;
+    transform: translateY(-10px);
+}
+
+.rotating-word.rotate-in {
+    animation: rotate-word-in 0.4s ease forwards;
+}
+
+@keyframes rotate-word-in {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+
 
 /* --- Timeline (Resume Page) --- */
 .timeline-container {
@@ -48,7 +72,8 @@ body.intro-done .tagline {
     transform: translateX(-50%);
     z-index: 1;
     font-size: 2.5rem;
-    font-weight: 500;
+    font-weight: 400;
+    font-family: var(--font-heading);
     color: var(--primary-text-color);
 }
 
@@ -59,7 +84,7 @@ body.intro-done .tagline {
     box-sizing: content-box;
     display: flex;
     align-items: center;
-    width: calc(320px * 12);
+    width: calc(320px * 20);
     animation: scroll-timeline 60s linear infinite;
 }
 
@@ -76,9 +101,9 @@ body.intro-done .tagline {
 .timeline-item {
     position: relative;
     height: 100%;
-    width: 280px;
+    width: 260px;
     flex-shrink: 0;
-    margin: 0 20px;
+    margin: 0 30px;
 }
 
 .timeline-dot {
@@ -117,11 +142,14 @@ body.intro-done .tagline {
     background: var(--card-bg-color);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
-    padding: 24px;
+    padding: 16px 20px;
     transition: all var(--transition-fast);
     position: absolute;
     width: 100%;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    box-sizing: border-box;
+    text-align: center;
 }
 
 .timeline-item.top .timeline-card {
@@ -133,28 +161,221 @@ body.intro-done .tagline {
 }
 
 .timeline-card:hover {
-    transform: translateY(-3px) scale(1.02);
+    transform: translateX(-50%) translateY(-3px) scale(1.02);
     border-color: var(--accent-color);
 }
 
 .timeline-date {
-    font-size: 0.9rem;
-    color: var(--secondary-text-color);
-    margin-bottom: 8px;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    font-weight: 500;
+    color: var(--accent-color);
+    margin-bottom: 4px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
 }
 
 .timeline-title {
-    font-size: 1.2rem;
-    font-weight: 700;
-    margin-bottom: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 2px;
     color: var(--primary-text-color);
     font-family: var(--font-main);
 }
 
 .timeline-company {
     color: var(--secondary-text-color);
-    font-size: 1rem;
+    font-size: 0.8rem;
+    font-family: var(--font-mono);
+    font-weight: 400;
 }
+
+/* --- Resume Accordion Sections --- */
+.resume-intro {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--secondary-text-color);
+    max-width: 720px;
+    margin: 0 auto var(--spacing-3xl);
+    text-align: center;
+    font-family: var(--font-main);
+}
+
+.accordion-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--border-color);
+}
+
+.accordion-item {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.accordion-header {
+    width: 100%;
+    background: none;
+    border: none;
+    padding: var(--spacing-lg) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    cursor: pointer;
+    font-family: var(--font-heading);
+    color: var(--primary-text-color);
+    transition: color var(--transition-fast);
+}
+
+.accordion-header:hover {
+    color: var(--accent-color);
+}
+
+.accordion-label {
+    font-size: 1.6rem;
+    font-weight: 400;
+    flex-shrink: 0;
+}
+
+.accordion-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--secondary-text-color);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    flex-grow: 1;
+    opacity: 0.6;
+}
+
+.accordion-icon {
+    position: relative;
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+}
+
+.accordion-icon::before,
+.accordion-icon::after {
+    content: '';
+    position: absolute;
+    background: var(--primary-text-color);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+/* Horizontal bar */
+.accordion-icon::before {
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 1.5px;
+    transform: translateY(-50%);
+}
+
+/* Vertical bar — rotates to form + / − */
+.accordion-icon::after {
+    left: 50%;
+    top: 0;
+    width: 1.5px;
+    height: 100%;
+    transform: translateX(-50%);
+}
+
+.accordion-header[aria-expanded="true"] .accordion-icon::after {
+    transform: translateX(-50%) rotate(90deg);
+    opacity: 0;
+}
+
+.accordion-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                padding 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+                opacity 0.3s ease;
+    opacity: 0;
+    padding: 0 0;
+}
+
+.accordion-item.open .accordion-body {
+    opacity: 1;
+    padding: 0 0 var(--spacing-xl);
+}
+
+/* --- Accordion Entry (experience/education blocks) --- */
+.accordion-entry {
+    padding: var(--spacing-md) 0;
+}
+
+.accordion-entry + .accordion-entry {
+    border-top: 1px solid var(--border-color);
+    opacity: 0.85;
+}
+
+.accordion-entry:first-child {
+    padding-top: 0;
+}
+
+.accordion-entry-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--spacing-md);
+    margin-bottom: var(--spacing-xs);
+}
+
+.accordion-entry-header h3 {
+    font-family: var(--font-main);
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--primary-text-color);
+    margin: 0;
+}
+
+.accordion-date {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--accent-color);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    white-space: nowrap;
+}
+
+.accordion-role {
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    color: var(--secondary-text-color);
+    margin: 0 0 var(--spacing-sm);
+}
+
+.accordion-entry p:last-child {
+    font-size: 0.95rem;
+    line-height: 1.65;
+    color: var(--secondary-text-color);
+    margin: 0;
+}
+
+/* --- Skills Grid inside accordion --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-lg);
+}
+
+.skill-category h4 {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--accent-color);
+    margin: 0 0 var(--spacing-xs);
+}
+
+.skill-category p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--secondary-text-color);
+    margin: 0;
+}
+
+
 
 /* =============================================
    RESPONSIVE STYLES
@@ -211,13 +432,72 @@ body.intro-done .tagline {
     .portfolio-nav-pill {
         display: none;
     }
+
+    /* Mobile Terminal */
+    .terminal-line {
+        font-size: 0.7rem;
+        gap: var(--spacing-sm);
+        overflow-x: auto;
+    }
+
+    .terminal-permissions {
+        display: none;
+    }
+
+    .terminal-filename {
+        min-width: 140px;
+    }
+
+    .terminal-stack {
+        min-width: auto;
+    }
+
+    /* Mobile VHS Shelf */
+    .vhs-station {
+        grid-template-columns: 1fr;
+    }
+
+    .vhs-shelf {
+        min-width: auto;
+    }
+
+    /* Mobile Album Deck */
+    .album-shelf {
+        grid-template-columns: 1fr;
+    }
+
+    .album-deck {
+        width: 240px;
+    }
+
+    .album-cards {
+        width: 240px;
+        height: 300px;
+    }
+
+    /* Mobile Album Lightbox */
+    .album-lightbox-stage {
+        width: 85vw;
+        height: 70vh;
+    }
     
     .bio-grid {
         grid-template-columns: 1fr 1fr;
     }
-    
-    .resume-details-layout {
+
+    .portfolio-content .bio-grid {
         grid-template-columns: 1fr;
+    }
+
+    .portfolio-card {
+        grid-template-columns: 1fr;
+    }
+
+    .portfolio-card-number {
+        grid-row: auto;
+        font-size: 2rem;
+        text-align: left;
+        margin-bottom: var(--spacing-xs);
     }
     
     .typed-text {
@@ -233,8 +513,19 @@ body.intro-done .tagline {
     }
 
     /* Mobile Navigation */
-    .navbar {
+    .navbar-inner {
         justify-content: space-between;
+    }
+
+    .site-name {
+        position: static;
+    }
+
+    .puzzle-btn {
+        left: auto;
+        right: calc(var(--spacing-xl) + 90px);
+        padding: 4px 8px;
+        font-size: 0.65rem;
     }
     
     .nav-menu {
@@ -244,7 +535,7 @@ body.intro-done .tagline {
         flex-direction: column;
         background-color: var(--bg-color);
         width: 100%;
-        height: calc(100vh - 69px);
+        height: calc(100dvh - 69px);
         text-align: center;
         transition: var(--transition-normal);
         gap: var(--spacing-xl);
@@ -347,6 +638,20 @@ body.intro-done .tagline {
     .timeline-item.bottom .timeline-card {
         top: auto;
         bottom: auto;
+    }
+
+    /* Mobile Accordion */
+    .accordion-label {
+        font-size: 1.3rem;
+    }
+
+    .accordion-entry-header {
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .skills-grid {
+        grid-template-columns: 1fr;
     }
 }
 

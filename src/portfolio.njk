@@ -3,14 +3,14 @@ layout: base.njk
 title: Portfolio
 mainClass: main-content portfolio-page-layout
 permalink: /portfolio.html
-description: "Corwin Lee's portfolio projects across development, photography, and videography."
+description: "Corwin Lee's portfolio projects across software, data, photography, and videography."
 ---
 
 <aside class="portfolio-sidebar">
     <nav class="portfolio-nav">
         <div class="portfolio-nav-pill"></div>
         <ul>
-            <li><a href="#" class="portfolio-nav-link active" data-target="coding">Development</a></li>
+            <li><a href="#" class="portfolio-nav-link active" data-target="coding">Software & Data</a></li>
             <li><a href="#" class="portfolio-nav-link" data-target="photography">Photography</a></li>
             <li><a href="#" class="portfolio-nav-link" data-target="videography">Videography</a></li>
         </ul>
@@ -18,69 +18,215 @@ description: "Corwin Lee's portfolio projects across development, photography, a
 </aside>
 
 <div class="portfolio-content">
+
+    {# ── SOFTWARE & DATA — Terminal UI ── #}
     <section id="coding-portfolio" class="portfolio-section">
-        <h2 class="section-title">Development Projects</h2>
-        <div class="project-grid">
-            <a class="card project-tile" 
-                 href="#letterboxd-wrapped"
-                 id="letterboxd-wrapped"
-                 role="button"
-                 aria-label="Open Letterboxd Wrapped details"
-                 data-title="Letterboxd Wrapped"
-                 data-video-src="https://www.youtube.com/embed/lP_lbyokius?si=5dBWl8tQ30A4ugfc"
-                 data-repo-link="https://github.com/CKWlee/letterboxd-wrapped"
-                 data-tech-breakdown='["Built with React, utilizing functional components and hooks for state management.","Client-side file parsing implemented with JSZip and PapaParse to handle user-uploaded ZIP/CSV files directly in the browser.","Data visualization achieved with Recharts for interactive charts and d3-cloud for dynamic word clouds.","Includes a custom sentiment analysis module to interpret text from user reviews."]'
-                 data-ux-design='["**The Problem:** Letterboxd users have rich data, but the default export is an uninspiring CSV file.","**The Goal:** Create a visually engaging and intuitive dashboard to help users discover personal insights about their viewing habits.","**Design Process:** I focused on a clean, single-page layout to avoid overwhelming users. I chose specific chart types (bar, pie, word cloud) that best represented different data points, ensuring clarity and immediate understanding. The user flow is simple: upload a file, and instantly see your personalized dashboard."]'>
-                <h3>Letterboxd Wrapped</h3>
-                <p>A front-end data visualization app in React to analyze and explore your personal movie-watching habits.</p>
-                <div class="card-footer">
-                    <span class="card-link">View Details &rarr;</span>
+        <div class="terminal-window">
+            <div class="terminal-titlebar">
+                <span class="terminal-dot red"></span>
+                <span class="terminal-dot yellow"></span>
+                <span class="terminal-dot green"></span>
+                <span class="terminal-title">corwin@portfolio ~ /projects</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line terminal-prompt">
+                    <span class="terminal-user">corwin</span><span class="terminal-at">@</span><span class="terminal-host">portfolio</span><span class="terminal-colon">:</span><span class="terminal-path">~/projects</span><span class="terminal-dollar">$</span> <span class="terminal-cmd">ls -la</span>
                 </div>
-            </a>
-            <a class="card project-tile" 
-                 href="#card-counting-tutor"
-                 id="card-counting-tutor"
-                 role="button"
-                 aria-label="Open Card Counting Tutor details"
-                 data-title="Card Counting Tutor"
-                 data-video-src="https://www.youtube.com/embed/S9RtdvkqW6w?si=56A5KUJZrbLskKJh"
-                 data-repo-link="https://github.com/CKWlee/card-counting-tutor"
-                 data-tech-breakdown='["Developed in React, managing the entire game state including player/dealer hands, deck composition, and the running count.","Implemented core Blackjack logic, including dealer actions (hit/stand on soft 17), splitting, and doubling down.","The card deck is a dynamic array of objects, shuffled and dealt from to accurately simulate a real game.","Real-time feedback system updates the UI based on the user's counting accuracy."]'
-                 data-ux-design='["**The Problem:** Learning card counting is difficult and requires constant practice.","**The Goal:** Build a simulator that not only lets you play Blackjack but actively teaches the Hi-Lo strategy.","**Design Process:** The UI is designed to be clean and focused, mimicking a real card table. Key information like the running count and user feedback is displayed prominently but without clutter. The user flow guides the player through hands, providing immediate correction to reinforce learning."]'>
-                <h3>Card Counting Tutor</h3>
-                <p>A Blackjack simulator that teaches the Hi-Lo card counting strategy using a working game system.</p>
-                <div class="card-footer">
-                    <span class="card-link">View Details &rarr;</span>
+                <div class="terminal-line terminal-output terminal-table-header">
+                    <span>drwxr-xr-x  name                       stack                 status</span>
                 </div>
-            </a>
-            <a class="card project-tile" 
-                 href="#ai-audiobook-reader"
-                 id="ai-audiobook-reader"
-                 role="button"
-                 aria-label="Open AI Audiobook Reader details"
-                 data-title="AI Audiobook Reader"
-                 data-video-src="https://www.youtube.com/embed/your_video_id_here"
-                 data-repo-link="https://github.com/CKWlee/ai-audiobook-reader"
-                 data-tech-breakdown='["Full-stack application with a Python backend using the Flask framework.","The backend API handles PDF uploads, extracts text content, and interfaces with the Text-to-Speech engine.","Integrated Coqui TTS, an open-source AI engine, to generate natural-sounding speech from the extracted text.","The front-end, built with vanilla JavaScript, communicates with the API and streams the generated audio for in-browser playback."]'
-                 data-ux-design='["**The Problem:** Many academic texts or documents are only available as PDFs, making them inaccessible for auditory learners or for listening on the go.","**The Goal:** Create a simple tool to convert any PDF into an audiobook instantly.","**Design Process:** The user interface is intentionally minimalist. The entire user flow consists of a single action: uploading a file. This removes all friction and makes the tool immediately useful. The focus was on creating a functional, single-purpose application that solves a clear user need."]'>
-                <h3>AI Audiobook Reader</h3>
-                <p>A web app that converts PDF files into audio using an open-source text-to-speech engine.</p>
-                <div class="card-footer">
-                    <span class="card-link">View Details &rarr;</span>
+
+                <button class="terminal-line terminal-file"
+                    data-title="Letterboxd Wrapped"
+                    data-video-src="https://www.youtube.com/embed/lP_lbyokius?si=5dBWl8tQ30A4ugfc"
+                    data-repo-link="https://github.com/CKWlee/letterboxd-wrapped"
+                    data-desc="Full-stack React app that pulls user data and displays personalized film stats through 15+ interactive D3.js charts."
+                    data-tech-breakdown='["Built with React, utilizing functional components and hooks for state management.","Client-side file parsing implemented with JSZip and PapaParse to handle user-uploaded ZIP/CSV files directly in the browser.","Data visualization achieved with Recharts for interactive charts and d3-cloud for dynamic word clouds.","Includes a custom sentiment analysis module to interpret text from user reviews."]'
+                    data-ux-design='["**The Problem:** Letterboxd users have rich data, but the default export is an uninspiring CSV file.","**The Goal:** Create a visually engaging and intuitive dashboard to help users discover personal insights about their viewing habits.","**Design Process:** I focused on a clean, single-page layout to avoid overwhelming users. I chose specific chart types (bar, pie, word cloud) that best represented different data points, ensuring clarity and immediate understanding. The user flow is simple: upload a file, and instantly see your personalized dashboard."]'>
+                    <span class="terminal-permissions">drwxr-xr-x</span>
+                    <span class="terminal-filename">letterboxd-wrapped/</span>
+                    <span class="terminal-stack">React · D3.js · Node.js</span>
+                    <span class="terminal-status terminal-status-live">● live</span>
+                </button>
+
+                <button class="terminal-line terminal-file"
+                    data-title="Box Office Revenue Predictor"
+                    data-video-src=""
+                    data-repo-link="https://github.com/CKWlee/box-office-predictor"
+                    data-desc="ML pipeline that collects film data, engineers 103 features, and predicts box office revenue with R² of 0.82."
+                    data-tech-breakdown='["End-to-end ML pipeline: data collection, feature engineering (103 features), model training, and prediction serving.","Models evaluated include Random Forest, Gradient Boosting, and ensemble methods, achieving R² of 0.82.","Deployed with Docker and CI/CD via GitHub Actions for one-command deployment.","Streamlit frontend delivers real-time predictions in under 1 second."]'
+                    data-ux-design='["**The Problem:** Predicting box office performance is complex—studios, distributors, and analysts rely on gut feeling more than data.","**The Goal:** Build a tool that takes a film\u0027s metadata and outputs a reliable revenue prediction.","**Design Process:** The Streamlit interface is deliberately simple—enter a few fields, get a number. The complexity lives entirely in the pipeline behind it."]'>
+                    <span class="terminal-permissions">drwxr-xr-x</span>
+                    <span class="terminal-filename">box-office-predictor/</span>
+                    <span class="terminal-stack">Python · Scikit-learn · Docker</span>
+                    <span class="terminal-status terminal-status-live">● live</span>
+                </button>
+
+                <button class="terminal-line terminal-file"
+                    data-title="Card Counting Tutor"
+                    data-video-src="https://www.youtube.com/embed/S9RtdvkqW6w?si=56A5KUJZrbLskKJh"
+                    data-repo-link="https://github.com/CKWlee/card-counting-tutor"
+                    data-desc="Blackjack simulator that teaches Hi-Lo card counting through a fully working game with real-time feedback."
+                    data-tech-breakdown='["Developed in React, managing the entire game state including player/dealer hands, deck composition, and the running count.","Implemented core Blackjack logic, including dealer actions (hit/stand on soft 17), splitting, and doubling down.","The card deck is a dynamic array of objects, shuffled and dealt from to accurately simulate a real game.","Real-time feedback system updates the UI based on the user\u0027s counting accuracy."]'
+                    data-ux-design='["**The Problem:** Learning card counting is difficult and requires constant practice.","**The Goal:** Build a simulator that not only lets you play Blackjack but actively teaches the Hi-Lo strategy.","**Design Process:** The UI is designed to be clean and focused, mimicking a real card table. Key information like the running count and user feedback is displayed prominently but without clutter."]'>
+                    <span class="terminal-permissions">drwxr-xr-x</span>
+                    <span class="terminal-filename">card-counting-tutor/</span>
+                    <span class="terminal-stack">React · Game Logic</span>
+                    <span class="terminal-status terminal-status-live">● live</span>
+                </button>
+
+                <button class="terminal-line terminal-file"
+                    data-title="AI Audiobook Reader"
+                    data-video-src="https://www.youtube.com/embed/your_video_id_here"
+                    data-repo-link="https://github.com/CKWlee/ai-audiobook-reader"
+                    data-desc="Upload a PDF, get an audiobook. Full-stack app with Flask backend and Coqui TTS for natural-sounding speech."
+                    data-tech-breakdown='["Full-stack application with a Python backend using the Flask framework.","The backend API handles PDF uploads, extracts text content, and interfaces with the Text-to-Speech engine.","Integrated Coqui TTS, an open-source AI engine, to generate natural-sounding speech from the extracted text.","The front-end, built with vanilla JavaScript, communicates with the API and streams the generated audio for in-browser playback."]'
+                    data-ux-design='["**The Problem:** Many academic texts or documents are only available as PDFs, making them inaccessible for auditory learners.","**The Goal:** Create a simple tool to convert any PDF into an audiobook instantly.","**Design Process:** The user interface is intentionally minimalist. The entire user flow consists of a single action: uploading a file."]'>
+                    <span class="terminal-permissions">drwxr-xr-x</span>
+                    <span class="terminal-filename">ai-audiobook-reader/</span>
+                    <span class="terminal-stack">Python · Flask · AI/TTS</span>
+                    <span class="terminal-status terminal-status-complete">● done</span>
+                </button>
+
+                <div class="terminal-line terminal-prompt terminal-prompt-waiting">
+                    <span class="terminal-user">corwin</span><span class="terminal-at">@</span><span class="terminal-host">portfolio</span><span class="terminal-colon">:</span><span class="terminal-path">~/projects</span><span class="terminal-dollar">$</span> <span class="terminal-cursor">█</span>
                 </div>
-            </a>
+            </div>
+        </div>
+
+        <div class="terminal-detail-panel" id="terminal-detail-panel">
+            <div class="terminal-detail-header">
+                <span class="terminal-detail-prompt">cat README.md</span>
+                <button class="terminal-detail-close" aria-label="Close">&times;</button>
+            </div>
+            <div class="terminal-detail-body">
+                <h3 id="terminal-detail-title"></h3>
+                <p id="terminal-detail-desc"></p>
+                <div id="terminal-detail-tech"></div>
+                <div class="terminal-detail-links">
+                    <a id="terminal-detail-repo" href="#" target="_blank" rel="noopener noreferrer">View on GitHub →</a>
+                    <a id="terminal-detail-demo" href="#" target="_blank" rel="noopener noreferrer">Watch Demo →</a>
+                </div>
+            </div>
         </div>
     </section>
 
+    {# ── PHOTOGRAPHY — Card Deck / Albums ── #}
     <section id="photography-portfolio" class="portfolio-section hidden">
         <h2 class="section-title">Photography</h2>
-        <p>Coming soon...</p>
+        <div class="album-shelf">
+            <div class="album-deck" data-album="street">
+                <div class="album-deck-label">Street</div>
+                <div class="album-cards">
+                    <div class="album-card" style="background-image: url('/assets/photos/street-1.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/street-2.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/street-3.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/street-4.jpg')"></div>
+                </div>
+                <div class="album-counter"><span class="album-current">1</span> / <span class="album-total">4</span></div>
+            </div>
+            <div class="album-deck" data-album="nature">
+                <div class="album-deck-label">Nature</div>
+                <div class="album-cards">
+                    <div class="album-card" style="background-image: url('/assets/photos/nature-1.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/nature-2.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/nature-3.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/nature-4.jpg')"></div>
+                </div>
+                <div class="album-counter"><span class="album-current">1</span> / <span class="album-total">4</span></div>
+            </div>
+            <div class="album-deck" data-album="portrait">
+                <div class="album-deck-label">Portrait</div>
+                <div class="album-cards">
+                    <div class="album-card" style="background-image: url('/assets/photos/portrait-1.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/portrait-2.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/portrait-3.jpg')"></div>
+                    <div class="album-card" style="background-image: url('/assets/photos/portrait-4.jpg')"></div>
+                </div>
+                <div class="album-counter"><span class="album-current">1</span> / <span class="album-total">4</span></div>
+            </div>
+        </div>
     </section>
-    
+
+    {# ── VIDEOGRAPHY — VHS Shelf ── #}
     <section id="videography-portfolio" class="portfolio-section hidden">
         <h2 class="section-title">Videography</h2>
-        <p>Coming soon...</p>
+        <div class="vhs-station">
+            <div class="vhs-shelf">
+                <div class="vhs-tape" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                    <div class="vhs-cassette">
+                        <div class="vhs-window">
+                            <div class="vhs-reel"></div>
+                            <div class="vhs-reel"></div>
+                        </div>
+                        <div class="vhs-sticker">
+                            <span class="vhs-sticker-title">Short Film Title</span>
+                            <span class="vhs-sticker-meta">Drama · 8 min · 2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vhs-tape" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                    <div class="vhs-cassette">
+                        <div class="vhs-window">
+                            <div class="vhs-reel"></div>
+                            <div class="vhs-reel"></div>
+                        </div>
+                        <div class="vhs-sticker">
+                            <span class="vhs-sticker-title">Another Video</span>
+                            <span class="vhs-sticker-meta">Doc · 12 min · 2025</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="vhs-tape" data-video="https://www.youtube.com/embed/dQw4w9WgXcQ">
+                    <div class="vhs-cassette">
+                        <div class="vhs-window">
+                            <div class="vhs-reel"></div>
+                            <div class="vhs-reel"></div>
+                        </div>
+                        <div class="vhs-sticker">
+                            <span class="vhs-sticker-title">Music Video</span>
+                            <span class="vhs-sticker-meta">Music · 4 min · 2024</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="vhs-player" id="vhs-player">
+                <div class="vhs-player-idle">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" opacity="0.3"><rect x="2" y="4" width="20" height="16" rx="2"/><polygon points="9.5 8 16.5 12 9.5 16 9.5 8"/></svg>
+                    <span>Select a tape</span>
+                </div>
+                <div class="vhs-player-screen">
+                    <div class="vhs-static"></div>
+                    <div class="vhs-tracking">TRACKING</div>
+                    <div class="vhs-video-container" id="vhs-video-container"></div>
+                </div>
+                <div class="vhs-player-controls">
+                    <div class="vhs-now-playing">
+                        <span class="vhs-rec">● REC</span>
+                        <span id="vhs-now-title">—</span>
+                    </div>
+                    <button class="vhs-eject-btn" id="vhs-eject-btn">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 14 22 14"/><rect x="2" y="17" width="20" height="3"/></svg>
+                        <span>Eject</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     </section>
+
+</div>
+
+{# ── Album Lightbox (full-screen card shuffle viewer) ── #}
+<div class="album-lightbox" id="album-lightbox">
+    <button class="album-lightbox-close" aria-label="Close">&times;</button>
+    <div class="album-lightbox-stage">
+        <div class="album-lightbox-cards" id="album-lightbox-cards"></div>
+    </div>
+    <div class="album-lightbox-info">
+        <span class="album-lightbox-name" id="album-lightbox-name"></span>
+        <span class="album-lightbox-counter"><span id="album-lightbox-current">1</span> / <span id="album-lightbox-total">4</span></span>
+    </div>
+    <p class="album-lightbox-hint">Click to shuffle</p>
 </div>
 
 {% include "portfolio-modal.njk" %}

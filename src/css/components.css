@@ -17,13 +17,14 @@
     display: block;
     color: inherit;
     text-decoration: none;
+    cursor: pointer;
 }
 
 .card h3 {
     margin-top: 0;
     color: var(--primary-text-color);
     font-family: var(--font-main);
-    font-weight: 500;
+    font-weight: 600;
     font-size: 1.25rem;
 }
 
@@ -49,9 +50,10 @@
     cursor: pointer;
 }
 
-.project-tile:hover {
+.project-tile:hover,
+.project-tile-featured:hover {
     transform: translateY(-5px);
-    background-color: #374151;
+    background-color: var(--card-hover-bg);
     border-color: var(--accent-color);
 }
 
@@ -59,12 +61,6 @@
     text-align: left;
     transition: all var(--transition-normal);
     cursor: pointer;
-}
-
-.project-tile-featured:hover {
-    transform: translateY(-5px);
-    background-color: #374151;
-    border-color: var(--accent-color);
 }
 
 /* --- Tech Tags --- */
@@ -80,8 +76,9 @@
     color: var(--accent-color);
     padding: var(--spacing-xs) 0.75rem;
     border-radius: var(--radius-full);
-    font-size: 0.8rem;
-    font-weight: 700;
+    font-size: 0.75rem;
+    font-weight: 500;
+    font-family: var(--font-mono);
     border: 1px solid rgba(139, 92, 246, 0.3);
 }
 
@@ -93,6 +90,8 @@
     padding: 12px 24px;
     border-radius: var(--radius-sm);
     text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
     font-weight: 700;
     transition: all var(--transition-normal);
     margin-bottom: var(--spacing-xl);
@@ -139,11 +138,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: var(--spacing-md) var(--spacing-xl);
+    padding: 0;
     border-bottom: 1px solid var(--border-color);
     box-sizing: border-box;
     width: 100%;
-    background-color: rgba(17, 24, 39, 0.8);
+    background-color: var(--navbar-bg);
     backdrop-filter: blur(8px);
     position: sticky;
     top: 0;
@@ -151,10 +150,38 @@
     transition: transform var(--transition-slow), opacity var(--transition-slow);
 }
 
+.navbar-inner {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: var(--spacing-md) var(--spacing-xl);
+    box-sizing: border-box;
+    position: relative;
+}
+
 .navbar.hidden-up {
     transform: translateY(-100%);
     opacity: 0;
     pointer-events: none;
+}
+
+.site-name {
+    position: absolute;
+    left: var(--spacing-xl);
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 400;
+    color: var(--primary-text-color);
+    text-decoration: none;
+    letter-spacing: -0.01em;
+    transition: color var(--transition-fast);
+}
+
+.site-name:hover {
+    color: var(--accent-color);
 }
 
 .nav-menu {
@@ -169,6 +196,8 @@
 .nav-link {
     color: var(--secondary-text-color);
     text-decoration: none;
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
     font-weight: 500;
     padding: 8px 16px;
     border-radius: var(--radius-sm);
@@ -234,7 +263,7 @@ body.intro-done .nav-item.hide-initially {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(17, 24, 39, 0.5);
+    background-color: var(--modal-overlay-bg);
     backdrop-filter: blur(8px);
     display: flex;
     justify-content: center;
@@ -323,8 +352,8 @@ body.intro-done .nav-item.hide-initially {
     margin-top: 0;
     font-size: 1.75rem;
     margin-bottom: var(--spacing-lg);
-    font-family: var(--font-main);
-    font-weight: 500;
+    font-family: var(--font-heading);
+    font-weight: 400;
 }
 
 #modal-ux-design h4,
@@ -381,7 +410,7 @@ body.intro-done .nav-item.hide-initially {
     top: var(--spacing-md);
     right: var(--spacing-md);
     font-size: 2.5rem;
-    color: #9ca3af;
+    color: var(--secondary-text-color);
     background: none;
     border: none;
     cursor: pointer;
@@ -394,8 +423,8 @@ body.intro-done .nav-item.hide-initially {
     position: fixed;
     top: 50%;
     transform: translateY(-50%);
-    background-color: rgba(249, 250, 251, 0.1);
-    color: white;
+    background-color: var(--card-hover-bg);
+    color: var(--primary-text-color);
     border: 1px solid var(--border-color);
     cursor: pointer;
     padding: 0.75rem;
@@ -410,7 +439,7 @@ body.intro-done .nav-item.hide-initially {
 }
 
 .modal-nav:hover {
-    background-color: rgba(249, 250, 251, 0.2);
+    background-color: var(--bg-soft-accent);
 }
 
 .modal-nav-prev {
@@ -439,11 +468,18 @@ body.intro-done .nav-item.hide-initially {
 .interest-card:hover:not(.disabled) {
     transform: translateY(-5px);
     border-color: var(--accent-color);
+    background-color: var(--card-hover-bg);
 }
 
 .interest-card.disabled {
-    opacity: 0.6;
+    opacity: 0.5;
     cursor: not-allowed;
+}
+
+.interest-card.disabled:hover {
+    transform: none;
+    border-color: var(--border-color);
+    background-color: var(--card-bg-color);
 }
 
 .back-to-menu {
@@ -451,4 +487,179 @@ body.intro-done .nav-item.hide-initially {
     border: none;
     cursor: pointer;
     margin-bottom: var(--spacing-lg);
+}
+
+/* --- Theme Toggle --- */
+.nav-actions {
+    position: absolute;
+    right: var(--spacing-xl);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+}
+
+.theme-toggle {
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--secondary-text-color);
+    transition: all var(--transition-fast);
+}
+
+.theme-toggle:hover {
+    color: var(--primary-text-color);
+    border-color: var(--accent-color);
+}
+
+/* In dark mode: show sun icon, hide moon */
+[data-theme="dark"] .sun-icon { display: block; }
+[data-theme="dark"] .moon-icon { display: none; }
+
+/* In light mode: show moon icon, hide sun */
+[data-theme="light"] .sun-icon { display: none; }
+[data-theme="light"] .moon-icon { display: block; }
+
+/* --- Puzzle Button (Bio Page Only) --- */
+.puzzle-btn {
+    position: absolute;
+    left: calc(var(--spacing-xl) + 110px);
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 6px 12px;
+    color: var(--secondary-text-color);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+}
+
+.puzzle-btn:hover {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+
+.puzzle-btn.active {
+    color: var(--accent-color);
+    border-color: var(--accent-color);
+    background-color: rgba(139, 92, 246, 0.1);
+    animation: none;
+}
+
+.puzzle-btn.visible:not(.active) {
+    animation: neon-glow 2s ease-in-out infinite;
+}
+
+@keyframes neon-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(139, 92, 246, 0.3), 0 0 10px rgba(139, 92, 246, 0.1);
+        border-color: rgba(139, 92, 246, 0.5);
+    }
+    50% {
+        box-shadow: 0 0 10px rgba(139, 92, 246, 0.6), 0 0 20px rgba(139, 92, 246, 0.3), 0 0 30px rgba(139, 92, 246, 0.1);
+        border-color: rgba(139, 92, 246, 0.9);
+        color: var(--accent-color);
+    }
+}
+
+.puzzle-btn.visible {
+    display: flex;
+}
+
+/* --- Puzzle Mode Styles --- */
+.puzzle-ghost {
+    border: 2px dashed var(--accent-color);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-soft-accent) !important;
+    opacity: 0.6;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: default;
+    transition: none !important;
+}
+
+.puzzle-ghost:hover {
+    transform: none !important;
+    border-color: var(--accent-color) !important;
+    background-color: var(--bg-soft-accent) !important;
+}
+
+.puzzle-ghost::after {
+    content: attr(data-ghost-label);
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-color);
+    opacity: 0.7;
+    text-align: center;
+    padding: var(--spacing-sm);
+}
+
+/* --- Puzzle Tile (floating label card, Google Gravity style) --- */
+.puzzle-tile {
+    position: fixed;
+    z-index: 10000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 18px;
+    box-sizing: border-box;
+    background-color: var(--card-bg-color);
+    border: 2px solid var(--accent-color);
+    border-radius: var(--radius-sm);
+    color: var(--primary-text-color);
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+    will-change: left, top, width, height;
+}
+
+/* Spawning: smooth shrink from original tile size → label-card size */
+.puzzle-tile.puzzle-tile-spawning {
+    transition: left 0.45s cubic-bezier(.25,1,.5,1),
+                top 0.45s cubic-bezier(.25,1,.5,1),
+                width 0.45s cubic-bezier(.25,1,.5,1),
+                height 0.45s cubic-bezier(.25,1,.5,1);
+    pointer-events: none;
+}
+
+/* Returning to ghost (snap or Thor’s hammer) */
+.puzzle-tile.puzzle-tile-returning {
+    transition: left 0.45s cubic-bezier(.25,1,.5,1),
+                top 0.45s cubic-bezier(.25,1,.5,1),
+                width 0.45s cubic-bezier(.25,1,.5,1),
+                height 0.45s cubic-bezier(.25,1,.5,1),
+                opacity 0.3s ease 0.2s,
+                border-radius 0.45s ease;
+    pointer-events: none;
+}
+
+.puzzle-tile.dragging {
+    cursor: grabbing;
+    z-index: 10001;
+    box-shadow: 0 14px 48px rgba(139, 92, 246, 0.5);
+    border-color: var(--accent-color);
+    background-color: rgba(139, 92, 246, 0.12);
 }
